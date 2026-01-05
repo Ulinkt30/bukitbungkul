@@ -1,0 +1,1924 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil DESA BUKIT BUNGKUL (A2) - Website Resmi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Plus+Jakarta+Sans', sans-serif;
+        }
+        .page-content {
+            display: none;
+        }
+        .page-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hero-gradient {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('image/baner.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        /* Logika Timeline */
+        .timeline-line::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            transform: none;
+            width: 2px;
+            height: 100%;
+            background: #e2e8f0;
+            z-index: 0;
+        }
+        
+        @media (min-width: 768px) {
+            .timeline-line::before {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Gaya Dropdown */
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        /* Helper Struktur Bagan */
+        .org-chart-container {
+            min-width: 1200px;
+        }
+        .connector-v {
+            width: 2px;
+            background: #cbd5e1;
+            margin: 0 auto;
+        }
+        .connector-h {
+            height: 2px;
+            background: #cbd5e1;
+        }
+
+        /* Area yang Bisa Digeser */
+        .drag-scroll {
+            cursor: grab;
+            user-select: none;
+        }
+        .drag-scroll:active {
+            cursor: grabbing;
+        }
+
+        /* Custom Transition for Read More */
+        #greeting-wrapper {
+            transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col">
+
+    <!-- HEADER & NAVIGASI -->
+    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md shadow-md border-b border-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center gap-3 cursor-pointer" onclick="navigateTo('home')">
+                    <div class="bg-emerald-600 p-2.5 rounded-xl shadow-lg shadow-emerald-200 text-white">
+                        <i data-lucide="map"></i>
+                    </div>
+                    <div>
+                        <span class="block text-lg font-extrabold text-emerald-900 leading-none uppercase">Bukit Bungkul</span>
+                        <span class="text-[10px] font-bold text-emerald-600 tracking-[0.2em] uppercase">Kec. Renah Pamenang</span>
+                    </div>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-1">
+                    <button onclick="navigateTo('home')" class="nav-btn px-4 py-2.5 rounded-xl text-emerald-600 font-bold transition-all bg-emerald-50">Beranda</button>
+                    
+                    <div class="relative dropdown">
+                        <button class="nav-btn px-4 py-2.5 rounded-xl text-slate-600 font-semibold hover:bg-slate-50 transition-all flex items-center gap-1">
+                            Profil Desa <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                        </button>
+                        <div class="dropdown-menu absolute left-0 mt-0 w-56 bg-white border border-slate-100 shadow-xl rounded-2xl hidden py-2 z-[60]">
+                            <button onclick="navigateTo('sejarah')" class="block w-full text-left px-4 py-3 text-sm text-slate-600 hover:bg-emerald-50 hover:text-emerald-600 transition-all font-medium">Sejarah & Riwayat</button>
+                            <button onclick="navigateTo('kondisi-umum')" class="block w-full text-left px-4 py-3 text-sm text-slate-600 hover:bg-emerald-50 hover:text-emerald-600 transition-all font-medium">Kondisi Umum</button>
+                            <button onclick="navigateTo('geografis')" class="block w-full text-left px-4 py-3 text-sm text-slate-600 hover:bg-emerald-50 hover:text-emerald-600 transition-all font-medium">Letak Geografis</button>
+                            <button onclick="navigateTo('demografi')" class="block w-full text-left px-4 py-3 text-sm text-slate-600 hover:bg-emerald-50 hover:text-emerald-600 transition-all font-medium">Kondisi Demografi</button>
+                        </div>
+                    </div>
+
+                    <button onclick="navigateTo('organisasi')" class="nav-btn px-4 py-2.5 rounded-xl text-slate-600 font-semibold hover:bg-slate-50 transition-all">Organisasi</button>
+                    <button onclick="navigateTo('sosial')" class="nav-btn px-4 py-2.5 rounded-xl text-slate-600 font-semibold hover:bg-slate-50 transition-all">Sosial</button>
+                    <button onclick="navigateTo('ekonomi')" class="nav-btn px-4 py-2.5 rounded-xl text-slate-600 font-semibold hover:bg-slate-50 transition-all">Ekonomi</button>
+                    <button onclick="navigateTo('potensi')" class="nav-btn px-4 py-2.5 rounded-xl text-slate-600 font-semibold hover:bg-slate-50 transition-all">Potensi</button>
+                </div>
+
+                <button class="md:hidden p-2 text-slate-600" onclick="toggleMenu()">
+                    <i data-lucide="menu" id="menu-icon"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-slate-200 p-6 space-y-3 shadow-xl overflow-y-auto max-h-[80vh]">
+            <button onclick="navigateTo('home')" class="block w-full text-left px-4 py-3 rounded-xl bg-emerald-50 text-emerald-600 font-bold">Beranda</button>
+            <div class="px-4 py-2 text-xs font-bold text-slate-400 uppercase tracking-widest border-t border-slate-50 pt-4 uppercase">Profil Desa</div>
+            <button onclick="navigateTo('sejarah')" class="block w-full text-left px-4 py-2 text-slate-600 font-semibold">Sejarah & Riwayat</button>
+            <button onclick="navigateTo('kondisi-umum')" class="block w-full text-left px-4 py-2 text-slate-600 font-semibold">Kondisi Umum</button>
+            <button onclick="navigateTo('geografis')" class="block w-full text-left px-4 py-2 text-slate-600 font-semibold">Letak Geografis</button>
+            <button onclick="navigateTo('demografi')" class="block w-full text-left px-4 py-2 text-slate-600 font-semibold">Kondisi Demografi</button>
+            <div class="border-t border-slate-50 pt-2"></div>
+            <button onclick="navigateTo('organisasi')" class="block w-full text-left px-4 py-3 rounded-xl text-slate-600 font-semibold">Organisasi</button>
+            <button onclick="navigateTo('sosial')" class="block w-full text-left px-4 py-3 rounded-xl text-slate-600 font-semibold">Sosial</button>
+            <button onclick="navigateTo('ekonomi')" class="block w-full text-left px-4 py-3 rounded-xl text-slate-600 font-semibold">Ekonomi</button>
+            <button onclick="navigateTo('potensi')" class="block w-full text-left px-4 py-3 rounded-xl text-slate-600 font-semibold">Potensi</button>
+        </div>
+    </nav>
+
+    <!-- KONTEN UTAMA -->
+    <main class="flex-grow pt-20">
+        
+        <!-- BAGIAN: BERANDA -->
+        <section id="page-home" class="page-content active">
+            <div class="hero-gradient h-[75vh] flex items-center justify-center text-center px-4 relative">
+                <div class="max-w-4xl z-10">
+                   
+                    <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-8 uppercase tracking-tighter leading-tight">DESA BUKIT BUNGKUL (A2)</h1>
+                    <p class="text-lg md:text-2xl text-slate-200 mb-10 max-w-2xl mx-auto leading-relaxed uppercase">Mewujudkan tata kelola pemerintahan yang transparan, mandiri, dan sejahtera.</p>
+                    <div class="flex flex-col sm:flex-row justify-center gap-4">
+                        <button onclick="navigateTo('sejarah')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-10 py-4 rounded-2xl font-bold shadow-xl transition-all hover:-translate-y-1 uppercase">Eksplorasi Profil Desa</button>
+                        <button onclick="navigateTo('organisasi')" class="bg-white/10 backdrop-blur-md border border-white/20 text-white px-10 py-4 rounded-2xl font-bold hover:bg-white/20 transition-all uppercase">Struktur Pemerintah</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="py-20 bg-white">
+                <div class="max-w-6xl mx-auto px-6">
+                    <div class="bg-slate-50 p-8 md:p-12 rounded-[2.5rem] border border-slate-100 shadow-sm flex flex-col md:flex-row gap-12 items-stretch text-justify">
+                        <div class="md:w-1/3 w-full shrink-0 flex flex-col">
+                            <div class="sticky top-24">
+                                <img src="image/kades.jpeg" class="w-full h-auto rounded-[2rem] object-cover shadow-xl border-4 border-white" alt="Kepala Desa">
+                                <div class="mt-6 border-l-4 border-emerald-600 pl-4 text-left">
+                                    <p class="font-bold text-xl text-slate-900 uppercase">Cecep Supriyadi, S.Pt</p>
+                                    <p class="text-sm text-emerald-700 uppercase font-bold tracking-widest">Kepala Desa Bukit Bungkul</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="md:w-2/3 w-full flex flex-col">
+                            <h2 class="text-3xl font-bold text-slate-900 mb-6 tracking-tight uppercase text-left">Sambutan Kepala Desa</h2>
+                            
+                            <!-- Wrapper untuk Sambutan dengan tinggi selaras foto -->
+                            <div id="greeting-wrapper" class="relative overflow-hidden max-h-[380px]">
+                                <div class="text-slate-600 text-lg leading-relaxed space-y-4 pr-2">
+                                    <p>Assalamu’alaikum warahmatullahi wabarakatuh, salam sejahtera bagi kita semua. Segala puji dan syukur kita panjatkan ke hadirat Tuhan Yang Maha Esa atas rahmat dan karunia-Nya, sehingga penyusunan dan penerbitan Buku Profil Desa Bukit Bungkul dapat terlaksana dengan baik.</p>
+                                    <p>Buku ini disusun sebagai dokumen penting yang menyajikan gambaran menyeluruh mengenai kondisi wilayah, potensi desa, serta dinamika perkembangan Desa Bukit Bungkul, Kecamatan Renah Pamenang, Kabupaten Merangin. Sebagai Kepala Desa Bukit Bungkul, saya menyampaikan apresiasi dan penghargaan setinggi-tingginya kepada seluruh pihak yang telah berperan aktif dalam proses penyusunan buku profil desa ini.</p>
+                                    <p>Kehadiran buku ini diharapkan mampu menjadi sumber informasi yang akurat, objektif, dan dapat dipercaya, baik bagi masyarakat desa, pemerintah, maupun pihak lain yang memerlukan data dan informasi tentang Desa Bukit Bungkul. Penyusunan profil desa ini juga merupakan wujud komitmen pemerintah desa dalam menerapkan tata kelola pemerintahan yang transparan, akuntabel, serta berbasis data.</p>
+                                    <p>Kami berharap Buku Profil Desa Bukit Bungkul tidak hanya berfungsi sebagai dokumen administratif, tetapi juga sebagai pedoman dalam perencanaan pembangunan, evaluasi program desa, serta pengembangan potensi desa secara berkelanjutan. Wassalamu’alaikum warahmatullahi wabarakatuh.</p>
+                                    <div class="pt-4 text-left">
+                                        <p class="font-bold text-slate-900">Bukit Bungkul, 2025</p>
+                                        <p class="font-bold text-emerald-700 uppercase">Kepala Desa Bukit Bungkul</p>
+                                    </div>
+                                </div>
+                                <!-- Overlay Gradasi untuk Efek Terpotong -->
+                                <div id="greeting-overlay" class="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-slate-50 to-transparent"></div>
+                            </div>
+
+                            <!-- Tombol Lihat Selengkapnya -->
+                            <button id="read-more-btn" onclick="toggleGreeting()" class="mt-6 text-emerald-600 font-bold flex items-center gap-2 hover:text-emerald-700 transition-all uppercase text-sm w-fit group">
+                                <span>Lihat Selengkapnya</span>
+                                <i data-lucide="chevron-down" class="w-4 h-4 group-hover:translate-y-0.5 transition-transform"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BAGIAN: SEJARAH & RIWAYAT -->
+        <section id="page-sejarah" class="page-content py-24">
+            <div class="max-w-7xl mx-auto px-6 text-justify text-left">
+                <header class="text-center mb-24">
+                    <span class="text-emerald-600 font-bold text-xs tracking-[0.4em] uppercase mb-4 block text-center leading-none">Identitas & Riwayat</span>
+                    <h2 class="text-5xl font-extrabold text-slate-900 mb-6 uppercase tracking-tight text-center leading-none">Sejarah Desa</h2>
+                    <div class="w-24 h-2 bg-emerald-500 mx-auto rounded-full"></div>
+                </header>
+
+                <div class="grid lg:grid-cols-2 gap-16 items-center mb-24 text-left">
+                    <div class="space-y-8 text-left">
+                        <h3 class="text-3xl font-extrabold text-slate-900 flex items-center gap-4 text-left leading-tight uppercase tracking-tight">
+                            <span class="bg-emerald-600 text-white w-12 h-12 flex items-center justify-center rounded-2xl shadow-lg shadow-emerald-200 text-xl italic leading-none">01</span>
+                            Asal Usul Nama & Berdiri
+                        </h3>
+                        <div class="bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm leading-relaxed text-slate-600 space-y-6">
+                            <p class="text-lg">Desa Bukit Bungkul, Kecamatan Renah Pamenang, berdiri sejak tahun 1980. Berawal dari proyek <strong>Transmigrasi Umum</strong> dan dikenal dengan sebutan Unit Pemukiman Transmigrasi atau <strong>UPT Pamenang V (A2)</strong>.</p>
+                            <p>Nama <strong>Bukit Bungkul</strong> disepakati oleh pemerintah dan tokoh masyarakat setempat karena kondisi geografis pemukiman yang bergelombang atau berupa dataran berbukit-bukit.</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-6" id="stats-container">
+                        <div class="bg-emerald-900 p-8 rounded-[2rem] text-white">
+                            <p class="text-4xl font-extrabold mb-2 text-center leading-none count-up" data-target="1980">0</p>
+                            <p class="text-emerald-300 font-bold text-[10px] uppercase tracking-widest leading-relaxed text-center uppercase">Tahun Penempatan</p>
+                        </div>
+                        <div class="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm">
+                            <p class="text-4xl font-extrabold text-emerald-600 mb-2 text-center leading-none count-up" data-target="500">0</p>
+                            <p class="text-slate-400 font-bold text-[10px] uppercase tracking-widest leading-relaxed text-center uppercase">Kepala Keluarga</p>
+                        </div>
+                        <div class="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm">
+                            <p class="text-4xl font-extrabold text-emerald-600 mb-2 text-center leading-none uppercase count-up" data-target="80" data-suffix="%">0%</p>
+                            <p class="text-slate-400 font-bold text-[10px] uppercase tracking-widest leading-relaxed text-center uppercase">Etnis Jawa</p>
+                        </div>
+                        <div class="bg-emerald-600 p-8 rounded-[2rem] text-white">
+                            <p class="text-4xl font-extrabold mb-2 text-center leading-none uppercase">A2</p>
+                            <p class="text-emerald-100 font-bold text-[10px] uppercase tracking-widest leading-relaxed text-center uppercase">Unit Wilayah</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="max-w-5xl mx-auto">
+                    <h3 class="text-3xl font-extrabold text-slate-900 text-center mb-16 uppercase tracking-tight">Riwayat Kepemimpinan</h3>
+                    <div class="relative timeline-line space-y-12">
+                        <div class="relative z-10 flex flex-row items-center gap-8 md:gap-0">
+                            <div class="hidden md:block md:w-1/2 md:text-right md:pr-12 text-left">
+                                <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-4 py-1.5 rounded-full uppercase tracking-widest mb-2 inline-block">KUPT</span>
+                                <h4 class="text-xl font-bold text-slate-900 uppercase leading-none">Anang</h4>
+                                <p class="text-slate-500 font-medium italic text-sm mt-2 uppercase">Tahun 1980 s/d 1983</p>
+                            </div>
+                            <div class="w-10 h-10 shrink-0 bg-emerald-600 rounded-full border-4 border-white shadow-xl md:absolute md:left-1/2 md:-translate-x-1/2"></div>
+                            <div class="flex-grow md:w-1/2 md:pl-12 text-left">
+                                <div class="md:hidden mb-2">
+                                    <h4 class="text-lg font-bold text-slate-900 uppercase">Anang (KUPT)</h4>
+                                    <p class="text-slate-500 text-sm italic">Tahun 1980 s/d 1983</p>
+                                </div>
+                                <p class="text-lg font-extrabold text-emerald-700 uppercase leading-none">Masa Transmigrasi</p>
+                            </div>
+                        </div>
+                        <div class="relative z-10 flex flex-row items-center gap-8 md:gap-0">
+                            <div class="flex-grow md:w-1/2 md:text-right md:pr-12">
+                                <div class="md:hidden mb-2 text-left">
+                                    <h4 class="text-lg font-bold text-slate-900 uppercase leading-none">Ujang Juana (KUPT)</h4>
+                                    <p class="text-slate-500 text-sm italic mt-2 uppercase">Tahun 1983 s/d 1985</p>
+                                </div>
+                                <p class="text-lg font-extrabold text-emerald-700 uppercase leading-none">Masa Transmigrasi</p>
+                            </div>
+                            <div class="w-10 h-10 shrink-0 bg-emerald-600 rounded-full border-4 border-white shadow-xl md:absolute md:left-1/2 md:-translate-x-1/2"></div>
+                            <div class="hidden md:block md:w-1/2 md:pl-12 text-left">
+                                <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-4 py-1.5 rounded-full uppercase tracking-widest mb-2 inline-block">KUPT</span>
+                                <h4 class="text-xl font-bold text-slate-900 uppercase leading-none">Ujang Juana</h4>
+                                <p class="text-slate-500 font-medium italic text-sm mt-2 uppercase">Tahun 1983 s/d 1985</p>
+                            </div>
+                        </div>
+                        <div class="relative z-10 flex flex-row items-center gap-8 md:gap-0">
+                            <div class="hidden md:block md:w-1/2 md:text-right md:pr-12 text-left">
+                                <h4 class="text-xl font-bold text-slate-900 uppercase leading-none">Ujang Juana</h4>
+                                <p class="text-slate-500 font-medium italic text-sm mt-2 uppercase">Tahun 1983 s/d 1988</p>
+                            </div>
+                            <div class="w-12 h-12 shrink-0 bg-white border-4 border-emerald-500 rounded-2xl flex items-center justify-center shadow-lg md:absolute md:left-1/2 md:-translate-x-1/2">
+                                <span class="text-emerald-600 font-black text-xs leading-none">01</span>
+                            </div>
+                            <div class="flex-grow md:w-1/2 md:pl-12 text-left">
+                                <div class="md:hidden mb-1 text-left">
+                                    <h4 class="text-lg font-bold text-slate-900 uppercase leading-none">Ujang Juana</h4>
+                                    <p class="text-slate-500 text-sm italic mt-1">Tahun 1983 s/d 1988</p>
+                                </div>
+                                <p class="text-lg font-extrabold text-emerald-700 uppercase leading-none">Kepala Desa Pertama</p>
+                            </div>
+                        </div>
+                        <div class="relative z-10 flex flex-row items-center gap-8 md:gap-0">
+                            <div class="hidden md:block md:w-1/2 md:text-right md:pr-12 text-left">
+                                <h4 class="text-2xl font-black text-emerald-800 uppercase leading-none">Cecep Supriyadi, S.Pt</h4>
+                                <p class="text-emerald-600 font-bold italic mt-2 tracking-tight text-sm uppercase">Tahun 2016 s/d Sekarang</p>
+                            </div>
+                            <div class="w-16 h-16 shrink-0 bg-emerald-600 border-4 border-emerald-100 rounded-[1.5rem] flex items-center justify-center shadow-xl shadow-emerald-200 md:absolute md:left-1/2 md:-translate-x-1/2">
+                                <i data-lucide="check-circle" class="text-white w-8 h-8"></i>
+                            </div>
+                            <div class="flex-grow md:w-1/2 md:pl-12 text-left text-justify">
+                                <div class="md:hidden mb-1 text-left">
+                                    <h4 class="text-xl font-black text-emerald-800 uppercase leading-none">Cecep Supriyadi, S.Pt</h4>
+                                    <p class="text-emerald-600 text-xs font-bold italic mt-2 uppercase">Tahun 2016 s/d Sekarang</p>
+                                </div>
+                                <p class="text-xl font-extrabold text-emerald-700 uppercase leading-none">Kepala Desa Aktif</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BAGIAN: KONDISI UMUM -->
+        <section id="page-kondisi-umum" class="page-content py-24">
+            <div class="max-w-7xl mx-auto px-6 text-left">
+                <header class="text-center mb-24">
+                    <span class="text-emerald-600 font-bold text-xs tracking-[0.4em] uppercase mb-4 block text-center leading-none">Sejarah Pembangunan</span>
+                    <h2 class="text-5xl font-extrabold text-slate-900 mb-6 uppercase tracking-tight text-center leading-tight">Kondisi Umum Desa</h2>
+                    <div class="w-24 h-2 bg-emerald-500 mx-auto mt-6 rounded-full leading-none"></div>
+                </header>
+
+                <div class="max-w-5xl mx-auto space-y-16">
+                    <div class="bg-white p-12 rounded-[3rem] border border-slate-100 shadow-sm text-left">
+                        <div class="flex items-center gap-6 mb-10 text-left">
+                            <div class="bg-emerald-100 p-4 rounded-2xl text-emerald-600 shadow-lg shadow-emerald-50 leading-none"><i data-lucide="line-chart" class="w-8 h-8 leading-none uppercase"></i></div>
+                            <h3 class="text-2xl font-bold text-slate-900 uppercase tracking-tight leading-tight">Ikhtisar Perkembangan Historis</h3>
+                        </div>
+                        <p class="text-slate-600 leading-relaxed text-lg text-justify mb-10">
+                            Berdasarkan data historis pembangunan Desa Bukit Bungkul (1981-2016), kondisi umum desa telah melalui tiga fase transformasi utama yang membentuk pondasi sosial dan fisik wilayah saat ini.
+                        </p>
+                        
+                        <div class="grid md:grid-cols-3 gap-6">
+                            <div class="p-8 bg-slate-50 rounded-[2.5rem] border border-slate-100 hover:border-emerald-200 transition-colors uppercase">
+                                <span class="text-[10px] font-black text-emerald-600 uppercase tracking-widest block mb-4">Fase I (1981-1990)</span>
+                                <h4 class="font-bold text-slate-900 mb-4 text-lg leading-tight">Masa Perintis</h4>
+                                <ul class="text-xs text-slate-500 space-y-3 leading-relaxed uppercase">
+                                    <li class="flex gap-2"><i data-lucide="check" class="w-3 h-3 text-emerald-500 shrink-0 leading-none uppercase"></i> Penempatan 500 KK Transmigran.</li>
+                                    <li class="flex gap-2"><i data-lucide="check" class="w-3 h-3 text-emerald-500 shrink-0 leading-none uppercase"></i> Pembukaan lahan pemukiman & jalan tanah.</li>
+                                    <li class="flex gap-2"><i data-lucide="check" class="w-3 h-3 text-emerald-500 shrink-0 leading-none uppercase"></i> Pembangunan SDN 01 Bukit Bungkul.</li>
+                                </ul>
+                            </div>
+                            <div class="p-8 bg-slate-50 rounded-[2.5rem] border border-slate-100 hover:border-emerald-200 transition-colors uppercase">
+                                <span class="text-[10px] font-black text-emerald-600 uppercase tracking-widest block mb-4">Fase II (1991-2005)</span>
+                                <h4 class="font-bold text-slate-900 mb-4 text-lg leading-tight uppercase">Masa Pertumbuhan</h4>
+                                <ul class="text-xs text-slate-500 space-y-3 leading-relaxed uppercase">
+                                    <li class="flex gap-2"><i data-lucide="check" class="w-3 h-3 text-emerald-500 shrink-0 leading-none uppercase"></i> Stabilisasi ekonomi sektor sawit/karet.</li>
+                                    <li class="flex gap-2"><i data-lucide="check" class="w-3 h-3 text-emerald-500 shrink-0 leading-none uppercase"></i> Pembangunan Puskesdes & Balai Desa.</li>
+                                    <li class="flex gap-2"><i data-lucide="check" class="w-3 h-3 text-emerald-500 shrink-0 leading-none uppercase"></i> Perluasan jaringan irigasi desa.</li>
+                                </ul>
+                            </div>
+                            <div class="p-8 bg-slate-50 rounded-[2.5rem] border border-slate-100 hover:border-emerald-200 transition-colors uppercase">
+                                <span class="text-[10px] font-black text-emerald-600 uppercase tracking-widest block mb-4">Fase III (2006-2016)</span>
+                                <h4 class="font-bold text-slate-900 mb-4 text-lg leading-tight uppercase">Masa Pemantapan</h4>
+                                <ul class="text-xs text-slate-500 space-y-3 leading-relaxed uppercase">
+                                    <li class="flex gap-2"><i data-lucide="check" class="w-3 h-3 text-emerald-500 shrink-0 leading-none uppercase"></i> Pengaspalan jalan utama desa (90%).</li>
+                                    <li class="flex gap-2"><i data-lucide="check" class="w-3 h-3 text-emerald-500 shrink-0 leading-none uppercase"></i> Elektrifikasi 100% wilayah dusun.</li>
+                                    <li class="flex gap-2"><i data-lucide="check" class="w-3 h-3 text-emerald-500 shrink-0 leading-none uppercase"></i> Inisiasi tata kelola digital pertama.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-emerald-900 text-white p-12 rounded-[3.5rem] shadow-xl relative overflow-hidden text-left text-left">
+                        <div class="relative z-10 text-left">
+                            <h3 class="text-3xl font-bold mb-8 uppercase tracking-tight leading-tight">Pondasi Masa Depan</h3>
+                            <div class="grid md:grid-cols-2 gap-10 text-left">
+                                <div class="space-y-4 text-left">
+                                    <div class="flex items-center gap-4 text-emerald-300"><i data-lucide="database" class="w-6 h-6 leading-none"></i> <p class="text-xs font-black uppercase tracking-widest leading-none">Berbasis Data Historis</p></div>
+                                    <p class="text-lg text-emerald-100/90 leading-relaxed text-justify uppercase">
+                                        Seluruh pencapaian fisik dan sosial dari masa perintis hingga sekarang merupakan modal utama bagi Desa Bukit Bungkul untuk terus bertransformasi menjadi desa yang lebih mandiri dan berdaya saing.
+                                    </p>
+                                </div>
+                                <div class="bg-white/10 p-8 rounded-[2rem] border border-white/20 backdrop-blur-md text-left">
+                                    <h4 class="text-xl font-bold mb-4 leading-none uppercase">Status Kondisi</h4>
+                                    <p class="text-sm text-emerald-200 mb-6 italic leading-none uppercase">Evaluasi pembangunan menunjukkan tren positif yang stabil.</p>
+                                    <div class="flex items-center gap-2"><i data-lucide="activity" class="text-emerald-400 w-5 h-5 leading-none"></i> <span class="font-bold text-sm uppercase">Kemajuan Terukur: 95% Target Tercapai</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="absolute -right-10 -bottom-10 opacity-5"><i data-lucide="award" class="w-64 h-64 leading-none text-white"></i></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BAGIAN: GEOGRAFIS -->
+        <section id="page-geografis" class="page-content py-24">
+            <div class="max-w-7xl mx-auto px-6 text-justify">
+                <header class="text-center mb-20 text-justify">
+                    <span class="text-emerald-600 font-bold text-xs tracking-[0.4em] uppercase mb-4 block text-center leading-none">Topografi & Iklim</span>
+                    <h2 class="text-5xl font-extrabold text-slate-900 mb-6 uppercase tracking-tight text-center leading-tight">Letak Geografis</h2>
+                    <div class="w-24 h-2 bg-emerald-500 mx-auto rounded-full mt-8 uppercase"></div>
+                </header>
+
+                <div class="grid md:grid-cols-3 gap-8 mb-16">
+                    <div class="bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm text-center transition-transform hover:-translate-y-2 uppercase">
+                        <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center mb-6 mx-auto shadow-lg shadow-emerald-50 leading-none"><i data-lucide="maximize" class="w-8 h-8 leading-none"></i></div>
+                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 leading-none">Luas Wilayah</p>
+                        <h4 class="text-3xl font-black text-slate-900 leading-none uppercase">2.950 Ha</h4>
+                        <p class="text-[10px] text-slate-500 mt-4 leading-relaxed uppercase">Terdiri dari lahan pemukiman, perkebunan rakyat, dan kawasan lindung.</p>
+                    </div>
+                    <div class="bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm text-center transition-transform hover:-translate-y-2 uppercase">
+                        <div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center mb-6 mx-auto shadow-lg shadow-blue-50 leading-none"><i data-lucide="layout-grid" class="w-8 h-8 leading-none uppercase"></i></div>
+                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 leading-none uppercase">Pembagian Wilayah</p>
+                        <h4 class="text-3xl font-black text-slate-900 leading-none uppercase">5 Dusun</h4>
+                        <p class="text-emerald-600 font-bold mt-1 text-sm tracking-widest uppercase">26 RT</p>
+                    </div>
+                    <div class="bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm text-center transition-transform hover:-translate-y-2 uppercase">
+                        <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center mb-6 mx-auto shadow-lg shadow-amber-50 leading-none"><i data-lucide="mountain" class="w-8 h-8 leading-none uppercase"></i></div>
+                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 leading-none uppercase">Kondisi Tanah</p>
+                        <h4 class="text-xl font-black text-slate-900 uppercase leading-none uppercase">Berbukit & Landai</h4>
+                        <p class="text-[10px] text-slate-500 mt-4 leading-relaxed uppercase">Dominasi tanah liat subur, sangat ideal untuk ladang dan kebun.</p>
+                    </div>
+                </div>
+
+                <div class="grid lg:grid-cols-2 gap-12 items-stretch text-left text-left mb-16">
+                    <div class="bg-white p-12 rounded-[3rem] border border-slate-100 shadow-sm text-left text-left">
+                        <h3 class="text-2xl font-bold text-slate-900 mb-8 flex items-center gap-3 uppercase tracking-tight text-left leading-none"><i data-lucide="navigation" class="text-emerald-600 leading-none uppercase"></i> Aksesibilitas Desa</h3>
+                        <div class="space-y-6 text-left text-left">
+                            <div class="flex items-center gap-6 p-5 bg-slate-50 rounded-2xl border border-slate-100 transition-all hover:bg-white hover:shadow-md text-left text-left">
+                                <div class="bg-white p-3 rounded-xl shadow-sm text-emerald-600 font-extrabold text-xs w-20 text-center shrink-0 border border-emerald-50 uppercase leading-none">6 KM</div>
+                                <div class="text-sm text-slate-600 text-left text-left">
+                                    <p class="font-bold text-slate-900 uppercase text-[10px] tracking-widest mb-1 leading-none">Ke Ibu Kota Kecamatan</p>
+                                    <p class="leading-relaxed uppercase">± 15 Menit (Berkendara) / 1 Jam (Jalan Kaki)</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-6 p-5 bg-slate-50 rounded-2xl border border-slate-100 transition-all hover:bg-white hover:shadow-md text-left text-left text-left text-left">
+                                <div class="bg-white p-3 rounded-xl shadow-sm text-emerald-600 font-extrabold text-xs w-20 text-center shrink-0 border border-emerald-50 uppercase leading-none uppercase">23 KM</div>
+                                <div class="text-sm text-slate-600 text-left text-left">
+                                    <p class="font-bold text-slate-900 uppercase text-[10px] tracking-widest mb-1 leading-none uppercase">Ke Kabupaten Merangin</p>
+                                    <p class="leading-relaxed uppercase">± 60 Menit perjalanan via transportasi darat.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-6 p-5 bg-slate-50 rounded-2xl border border-slate-100 transition-all hover:bg-white hover:shadow-md text-left text-left text-left text-left">
+                                <div class="bg-white p-3 rounded-xl shadow-sm text-emerald-600 font-extrabold text-xs w-20 text-center shrink-0 border border-emerald-50 uppercase leading-none uppercase uppercase uppercase uppercase">Ke Ibu Kota Provinsi</div>
+                                <div class="text-sm text-slate-600 text-left text-left text-left text-left">
+                                    <p class="font-bold text-slate-900 uppercase text-[10px] tracking-widest mb-1 leading-none uppercase uppercase uppercase uppercase uppercase">Ke Ibu Kota Provinsi</p>
+                                    <p class="leading-relaxed text-[13px] uppercase">± 6 Jam perjalanan via Telanaipura.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-emerald-900 text-white p-12 rounded-[3rem] shadow-xl relative overflow-hidden flex flex-col justify-center text-left text-left text-left">
+                        <div class="relative z-10 text-left text-left">
+                            <div class="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mb-8 border border-white/20 leading-none"><i data-lucide="droplet" class="w-8 h-8 text-emerald-400 leading-none"></i></div>
+                            <h3 class="text-2xl font-bold mb-6 uppercase tracking-tight leading-tight uppercase">Potensi Hidrologi & Lahan</h3>
+                            <p class="text-lg text-emerald-100 leading-relaxed text-justify mb-6 uppercase">
+                                Aliran sungai utama mengarah menuju ke <strong>Sungai Batang Hari</strong>. Wilayah ini kaya akan sumber air yang mendukung penggunaan lahan utama berupa kebun dan ladang produktif.
+                            </p>
+                            <span class="inline-block px-4 py-1 bg-white/10 rounded-full text-[10px] font-bold uppercase tracking-widest border border-white/10 uppercase">Sumber Air Vital</span>
+                        </div>
+                        <div class="absolute -right-10 -bottom-10 opacity-10 leading-none"><i data-lucide="waves" class="w-64 h-64 text-white leading-none"></i></div>
+                    </div>
+                </div>
+
+                <!-- PETA WILAYAH -->
+                <div class="bg-white p-10 rounded-[3rem] border border-slate-100 shadow-sm mb-16">
+                    <h3 class="text-2xl font-bold text-slate-900 mb-8 flex items-center gap-3 uppercase tracking-tight leading-none"><i data-lucide="map-pinned" class="text-emerald-600"></i> Peta Wilayah Desa Bukit Bungkul</h3>
+                    <div class="rounded-[2rem] overflow-hidden border-4 border-slate-50 shadow-inner aspect-video">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63790.71886654329!2d102.2944814873117!3d-2.184066535888936!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e2e114f9b51071b%3A0x2452b82985ab737b!2sBukit%20Bungkul%2C%20Kec.%20Renah%20Pamenang%2C%20Kabupaten%20Merangin%2C%20Jambi!5e0!3m2!1sid!2sid!4v1767556027775!5m2!1sid!2sid" class="w-full h-full border-0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BAGIAN: DEMOGRAFI -->
+        <section id="page-demografi" class="page-content py-24">
+            <div class="max-w-7xl mx-auto px-6">
+                <header class="text-center mb-24">
+                    <span class="text-emerald-600 font-bold text-xs tracking-[0.4em] uppercase mb-4 block text-center leading-none uppercase">Statistik Kependudukan</span>
+                    <h2 class="text-5xl font-extrabold text-slate-900 mb-6 uppercase tracking-tight text-center leading-tight">Kondisi Demografi</h2>
+                    <p class="text-slate-400 text-sm font-bold uppercase tracking-widest leading-none mt-2 text-center uppercase">Update Data: Oktober 2025</p>
+                    <div class="w-24 h-2 bg-emerald-500 mx-auto mt-8 rounded-full uppercase leading-none"></div>
+                </header>
+
+                <div class="grid lg:grid-cols-3 gap-8 mb-24">
+                    <div class="bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm text-center uppercase transition-transform hover:-translate-y-2">
+                        <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center mb-6 mx-auto shadow-lg shadow-emerald-50 leading-none"><i data-lucide="users-round" class="w-8 h-8 leading-none uppercase"></i></div>
+                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2 leading-none uppercase">Total Penduduk</p>
+                        <h4 class="text-4xl font-black text-slate-900 leading-none uppercase">3.450</h4>
+                        <div class="flex justify-center gap-4 mt-6 text-center">
+                            <div class="text-center text-center">
+                                <p class="text-[10px] font-bold text-blue-500 uppercase leading-none mb-1 uppercase text-center">Pria</p>
+                                <p class="font-bold text-slate-700 leading-none text-sm uppercase text-center">1.794</p>
+                            </div>
+                            <div class="w-[1px] bg-slate-100 h-8 leading-none"></div>
+                            <div class="text-center text-center">
+                                <p class="text-[10px] font-bold text-rose-500 uppercase leading-none mb-1 text-sm uppercase text-center">Wanita</p>
+                                <p class="font-bold text-slate-700 leading-none text-sm uppercase text-center">1.656</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm transition-transform hover:-translate-y-2">
+                        <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center mb-6 mx-auto shadow-lg shadow-amber-50 leading-none"><i data-lucide="hourglass" class="w-8 h-8 leading-none uppercase"></i></div>
+                        <h4 class="text-xl font-bold text-slate-900 text-center mb-6 uppercase tracking-tight uppercase">Komposisi Umur</h4>
+                        <div class="space-y-4 text-left">
+                            <div class="text-left">
+                                <div class="flex justify-between text-[10px] font-black text-slate-500 uppercase mb-1 leading-none uppercase"><span>Usia 0-15</span><span>25%</span></div>
+                                <div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden leading-none"><div class="bg-amber-400 h-full" style="width: 25%"></div></div>
+                            </div>
+                            <div class="text-left">
+                                <div class="flex justify-between text-[10px] font-black text-slate-500 uppercase mb-1 leading-none uppercase"><span>Usia Produktif</span><span>65%</span></div>
+                                <div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden leading-none"><div class="bg-emerald-500 h-full" style="width: 65%"></div></div>
+                            </div>
+                            <div class="text-left">
+                                <div class="flex justify-between text-[10px] font-black text-slate-500 uppercase mb-1 leading-none uppercase"><span>Lansia 65+</span><span>10%</span></div>
+                                <div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden leading-none"><div class="bg-slate-300 h-full" style="width: 10%"></div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm text-center transition-transform hover:-translate-y-2">
+                        <div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center mb-6 mx-auto shadow-lg shadow-blue-50 leading-none"><i data-lucide="heart-handshake" class="w-8 h-8 leading-none uppercase"></i></div>
+                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2 leading-none uppercase">Religi</p>
+                        <h4 class="text-2xl font-black text-slate-900 uppercase leading-none uppercase">Kerukunan Beragama</h4>
+                        <div class="mt-6 flex flex-wrap justify-center gap-2 text-center">
+                            <span class="px-3 py-1 bg-emerald-50 text-emerald-600 text-[9px] font-black rounded-full uppercase border border-emerald-100 tracking-tighter uppercase">Islam (Mayoritas)</span>
+                            <span class="px-3 py-1 bg-slate-50 text-slate-500 text-[9px] font-black rounded-full uppercase border border-slate-100 tracking-tighter">Lainnya</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid lg:grid-cols-2 gap-12 mb-24 items-stretch text-justify text-left">
+                    <div class="bg-white p-12 rounded-[3rem] border border-slate-100 shadow-sm text-left text-left">
+                        <h3 class="text-2xl font-bold text-slate-900 mb-10 flex items-center gap-4 text-left uppercase tracking-tight leading-none"><i data-lucide="briefcase" class="text-emerald-600 leading-none uppercase"></i> Mata Pencaharian Penduduk</h3>
+                        <div class="overflow-hidden rounded-2xl border border-slate-50 shadow-sm text-left">
+                            <table class="w-full text-left">
+                                <thead class="bg-emerald-600 text-white text-left">
+                                    <tr class="text-left">
+                                        <th class="p-5 text-[10px] font-black uppercase tracking-widest leading-none uppercase text-left">Jenis Pekerjaan</th>
+                                        <th class="p-5 text-[10px] font-black uppercase tracking-widest text-right leading-none uppercase text-left">Persentase</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-100 text-left">
+                                    <tr class="hover:bg-slate-50 transition-colors uppercase text-left">
+                                        <td class="p-5 flex items-center gap-3 text-left"><div class="w-2 h-2 bg-emerald-500 rounded-full leading-none"></div><span class="text-sm font-bold text-slate-700 leading-none uppercase">Petani / Pekebun</span></td>
+                                        <td class="p-5 text-right text-sm font-black text-emerald-600 leading-none uppercase text-left">65%</td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50 transition-colors uppercase text-left">
+                                        <td class="p-5 flex items-center gap-3 text-left text-left"><div class="w-2 h-2 bg-blue-500 rounded-full leading-none uppercase"></div><span class="text-sm font-bold text-slate-700 leading-none uppercase">Wiraswasta / Pedagang</span></td>
+                                        <td class="p-5 text-right text-sm font-black text-blue-600 leading-none uppercase text-left text-left">20%</td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50 transition-colors uppercase text-left text-left">
+                                        <td class="p-5 flex items-center gap-3 text-left text-left text-left"><div class="w-2 h-2 bg-amber-500 rounded-full leading-none uppercase"></div><span class="text-sm font-bold text-slate-700 leading-none text-sm uppercase">Buruh Harian Lepas</span></td>
+                                        <td class="p-5 text-right text-sm font-black text-amber-600 leading-none uppercase text-left text-left text-left">10%</td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50 transition-colors uppercase text-left text-left text-left text-left text-left"><div class="w-2 h-2 bg-rose-500 rounded-full leading-none uppercase"></div><span class="text-sm font-bold text-slate-700 leading-none text-sm uppercase">PNS / Karyawan Swasta</span></td>
+                                        <td class="p-5 text-right text-sm font-black text-rose-600 leading-none uppercase text-left text-left text-left text-left">3%</td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50 transition-colors uppercase text-left text-left text-left text-left text-left text-left">
+                                        <td class="p-5 flex items-center gap-3 text-left text-left text-left text-left text-left text-left text-left text-left"><div class="w-2 h-2 bg-slate-400 rounded-full leading-none uppercase"></div><span class="text-sm font-bold text-slate-700 leading-none text-sm uppercase">Lain-lain / Jasa</span></td>
+                                        <td class="p-5 text-right text-sm font-black text-slate-400 leading-none uppercase text-left text-left text-left text-left text-left">2%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-12 rounded-[3rem] border border-slate-100 shadow-sm flex flex-col text-left text-left text-left text-left">
+                        <h3 class="text-2xl font-bold text-slate-900 mb-10 flex items-center gap-4 text-left uppercase tracking-tight leading-none"><i data-lucide="graduation-cap" class="text-emerald-600 leading-none uppercase"></i> Tingkat Pendidikan</h3>
+                        <div class="grid grid-cols-2 gap-6 flex-grow text-center text-left text-left text-left">
+                            <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 text-center flex flex-col justify-center transition-all hover:bg-white hover:shadow-md border-b-4 border-b-slate-200 text-center text-left text-left text-left">
+                                <p class="text-3xl font-black text-slate-900 leading-none mb-2 uppercase">SD</p>
+                                <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest leading-none">Tamat Sekolah Dasar</p>
+                            </div>
+                            <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 text-center flex flex-col justify-center transition-all hover:bg-white hover:shadow-md border-b-4 border-b-slate-200 text-center text-left text-left text-left">
+                                <p class="text-3xl font-black text-slate-900 leading-none mb-2 uppercase">SMP</p>
+                                <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest leading-none">Menengah Pertama</p>
+                            </div>
+                            <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 text-center flex flex-col justify-center transition-all hover:bg-white hover:shadow-md border-b-4 border-b-slate-200 text-center text-left text-left text-left text-left">
+                                <p class="text-3xl font-black text-slate-900 leading-none mb-2 uppercase">SMA</p>
+                                <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest leading-none">Menengah Atas</p>
+                            </div>
+                            <div class="p-6 bg-emerald-50 rounded-2xl border border-emerald-100 text-center flex flex-col justify-center transition-all hover:bg-white hover:shadow-md border-b-4 border-b-emerald-600 text-center text-left text-left text-left text-left">
+                                <p class="text-3xl font-black text-emerald-600 leading-none mb-2 uppercase">PT</p>
+                                <p class="text-[9px] font-black text-emerald-700 uppercase tracking-widest leading-none">Perguruan Tinggi</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="max-w-4xl mx-auto bg-emerald-900 text-white p-12 rounded-[3rem] shadow-xl relative overflow-hidden text-left text-left text-left text-left text-left text-left text-left text-left">
+                    <div class="relative z-10 text-left text-left text-left text-left text-left text-left">
+                        <div class="flex items-center gap-6 mb-8 text-left text-left text-left text-left text-left">
+                            <div class="bg-white/10 p-4 rounded-2xl border border-white/20 leading-none text-left text-left text-left text-left"><i data-lucide="heart-handshake" class="w-8 h-8 text-emerald-400 leading-none text-left text-left text-left"></i></div>
+                            <h3 class="text-3xl font-bold uppercase tracking-tight leading-none text-left text-left">Agama & Kepercayaan</h3>
+                        </div>
+                        <div class="text-lg leading-relaxed text-emerald-100 space-y-6 text-justify text-left uppercase text-left text-left">
+                            <p>Masyarakat Desa Bukit Bungkul merupakan masyarakat yang religius with <strong>Agama Islam</strong> sebagai mayoritas. Kehidupan beragama di desa ini berjalan with sangat harmonis, menjunjung tinggi nilai-nilai toleransi dan gotong royong antar sesama warga.</p>
+                            <div class="flex gap-4 text-left text-left text-left">
+                                <span class="inline-block px-5 py-2 bg-emerald-800 rounded-full text-xs font-black uppercase tracking-widest border border-emerald-700 uppercase text-left">Toleransi Tinggi</span>
+                                <span class="inline-block px-5 py-2 bg-emerald-800 rounded-full text-xs font-black uppercase tracking-widest border border-emerald-700 uppercase text-left">Harmoni Sosial</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute -right-20 -bottom-20 opacity-5 leading-none text-white text-left"><i data-lucide="landmark" class="w-96 h-96 text-white leading-none uppercase text-left"></i></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BAGIAN: ORGANISASI -->
+        <section id="page-organisasi" class="page-content py-24">
+            <div class="max-w-7xl mx-auto px-6 text-justify text-left text-left text-left text-left">
+                <!-- Struktur Pemerintah Desa -->
+                <header class="text-center mb-24 text-left text-left text-left text-left">
+                    <span class="text-emerald-600 font-bold text-xs tracking-[0.4em] uppercase mb-4 block text-center leading-none uppercase text-left text-left">Pemerintahan Desa</span>
+                    <h2 class="text-4xl font-extrabold text-slate-900 uppercase tracking-tight text-center leading-none text-left text-left text-left">Struktur Organisasi Pemerintah Desa</h2>
+                    <div class="w-24 h-2 bg-emerald-500 mx-auto rounded-full mt-8 text-left text-left text-left text-left"></div>
+                </header>
+
+                <div class="mb-16 bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm text-left">
+                    <p class="text-slate-600 leading-relaxed text-lg text-justify uppercase">
+                        Struktur pemerintahan Desa Bukit Bungkul, Kecamatan Renah Pamenang Tahun 2025 dipimpin oleh Kepala Desa, yaitu Cecep Supriyadi, S.Pt. Dalam melaksanakan tugas pemerintahan desa, Kepala Desa dibantu oleh Sekretaris Desa, Nur Iksan, S.Pd, yang berperan dalam pengelolaan administrasi dan tata kelola pemerintahan desa. Selanjutnya, terdapat perangkat desa pada unsur pelaksana teknis, yaitu Ani Riyanti, S.Pd sebagai Kaur Umum dan Perencanaan yang bertanggung jawab atas administrasi umum serta perencanaan desa, and Apip Awaludin, S.Kom sebagai Kaur Keuangan yang mengelola keuangan desa.
+                    </p>
+                    <p class="text-slate-600 leading-relaxed text-lg text-justify mt-4 uppercase">
+                        Pada bidang pelaksana kewilayahan and pelayanan masyarakat, terdapat Yuli Listiani, S.Pd sebagai Kasi Pemerintahan yang menangani urusan pemerintahan desa, serta Nur Wanto sebagai Kasi Kesejahteraan and Pelayanan yang bertugas dalam pelayanan sosial and kesejahteraan masyarakat. Selain itu, desa juga memiliki kepala dusun, yaitu Erdi Hamsyah sebagai Kadus Sidomulyo, Samsu Darmawan sebagai Kadus Rejomulyo, Cecep Mulyadi sebagai Kadus Sidorejo, Warsono, A.Md sebagai Kadus Sukamaju, and Kusnadi sebagai Kadus Madusari, yang masing-masing bertanggung jawab atas wilayah dusunnya.
+                    </p>
+                    <p class="text-slate-600 leading-relaxed text-lg text-justify mt-4 uppercase">
+                        Untuk mendukung kelancaran administrasi and operasional desa, Desa Bukit Bungkul juga memiliki Dian Ayu Ningrum, S.Pd sebagai Staf Operator Desa yang menangani sistem informasi and administrasi berbasis teknologi, serta Siti Sumarni sebagai Staf Administrasi yang membantu pengelolaan administrasi desa secara umum. Secara keseluruhan, struktur perangkat Desa Bukit Bungkul berjumlah 12 orang, yang bekerja sama dalam menjalankan roda pemerintahan, pelayanan, and pembangunan desa.
+                    </p>
+                </div>
+
+                <div id="org-chart-scroll-1" class="w-full overflow-x-auto pb-12 drag-scroll mb-24">
+                    <div class="org-chart-container py-12 px-4 text-center">
+                        <div class="mb-8">
+                            <div class="inline-block bg-emerald-600 text-white p-6 rounded-2xl shadow-xl border-4 border-white w-72 transition-transform hover:scale-105">
+                                <p class="text-[10px] font-black uppercase tracking-widest opacity-80 mb-2 leading-none uppercase">Kepala Desa</p>
+                                <p class="text-xl font-black uppercase leading-tight uppercase">Cecep Supriyadi, S.Pt</p>
+                            </div>
+                        </div>
+                        <div class="connector-v h-8"></div>
+                        <div class="mb-8">
+                            <div class="inline-block bg-slate-800 text-white p-5 rounded-2xl shadow-lg border-4 border-white w-64 transition-transform hover:scale-105">
+                                <p class="text-[10px] font-black uppercase tracking-widest opacity-80 mb-1 leading-none uppercase">Sekretaris Desa</p>
+                                <p class="text-lg font-bold uppercase leading-tight uppercase">Nur Iksan, S.Pd</p>
+                            </div>
+                        </div>
+                        <div class="connector-v h-8"></div>
+                        <div class="relative max-w-5xl mx-auto">
+                            <div class="absolute top-0 left-0 right-0 h-0.5 bg-slate-300"></div>
+                            <div class="flex justify-between gap-4 pt-8">
+                                <div class="w-full flex flex-col items-center">
+                                    <div class="connector-v absolute top-0 h-8 -mt-8"></div>
+                                    <div class="bg-amber-500 text-white p-4 rounded-xl shadow-md border-2 border-white w-48 transition-transform hover:scale-105">
+                                        <p class="text-[9px] font-black uppercase tracking-widest opacity-90 mb-1 leading-none uppercase">Kasi Pemerintahan</p>
+                                        <p class="text-sm font-bold uppercase leading-tight">Yuli Listiani, S.Pd</p>
+                                    </div>
+                                </div>
+                                <div class="w-full flex flex-col items-center">
+                                    <div class="connector-v absolute top-0 h-8 -mt-8"></div>
+                                    <div class="bg-amber-500 text-white p-4 rounded-xl shadow-md border-2 border-white w-48 transition-transform hover:scale-105">
+                                        <p class="text-[9px] font-black uppercase tracking-widest opacity-90 mb-1 leading-none uppercase">Kasi Kesra & Pelayanan</p>
+                                        <p class="text-sm font-bold uppercase leading-tight uppercase">Nur Wanto</p>
+                                    </div>
+                                </div>
+                                <div class="w-full flex flex-col items-center">
+                                    <div class="connector-v absolute top-0 h-8 -mt-8"></div>
+                                    <div class="bg-blue-600 text-white p-4 rounded-xl shadow-md border-2 border-white w-48 transition-transform hover:scale-105">
+                                        <p class="text-[9px] font-black uppercase tracking-widest opacity-90 mb-1 leading-none uppercase">Kaur Umum & Perenc.</p>
+                                        <p class="text-sm font-bold uppercase leading-tight">Ani Riyanti, S.Pd</p>
+                                    </div>
+                                </div>
+                                <div class="w-full flex flex-col items-center">
+                                    <div class="connector-v absolute top-0 h-8 -mt-8"></div>
+                                    <div class="bg-blue-600 text-white p-4 rounded-xl shadow-md border-2 border-white w-48 transition-transform hover:scale-105">
+                                        <p class="text-[9px] font-black uppercase tracking-widest opacity-90 mb-1 leading-none uppercase">Kaur Keuangan</p>
+                                        <p class="text-sm font-bold uppercase leading-tight uppercase">Apip Awaludin, S.Kom</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-16 text-left">
+                            <h4 class="text-center font-black text-slate-400 uppercase tracking-[0.3em] text-xs mb-10 leading-none">Unsur Kewilayahan (Kepala Dusun)</h4>
+                            <div class="flex justify-center gap-4">
+                                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm w-44 transition-all hover:bg-emerald-50">
+                                    <p class="text-[8px] font-black text-emerald-500 uppercase tracking-widest mb-1 leading-none">Kadus Sidomulyo</p>
+                                    <p class="text-xs font-extrabold text-slate-800 uppercase leading-tight">Erdi Hamsyah</p>
+                                </div>
+                                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm w-44 transition-all hover:bg-emerald-50">
+                                    <p class="text-[8px] font-black text-emerald-500 uppercase tracking-widest mb-1 leading-none uppercase">Kadus Rejomulyo</p>
+                                    <p class="text-xs font-extrabold text-slate-800 uppercase leading-tight uppercase">Samsu Darmawan</p>
+                                </div>
+                                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm w-44 transition-all hover:bg-emerald-50">
+                                    <p class="text-[8px] font-black text-emerald-500 uppercase tracking-widest mb-1 leading-none uppercase">Kadus Sidorejo</p>
+                                    <p class="text-xs font-extrabold text-slate-800 uppercase leading-tight uppercase">Cecep Mulyadi</p>
+                                </div>
+                                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm w-44 transition-all hover:bg-emerald-50">
+                                    <p class="text-[8px] font-black text-emerald-500 uppercase tracking-widest mb-1 leading-none uppercase">Kadus Sukamaju</p>
+                                    <p class="text-xs font-extrabold text-slate-800 uppercase leading-tight uppercase">Warsono, A.Md</p>
+                                </div>
+                                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm w-44 transition-all hover:bg-emerald-50">
+                                    <p class="text-[8px] font-black text-emerald-500 uppercase tracking-widest mb-1 leading-none uppercase">Kadus Madusari</p>
+                                    <p class="text-xs font-extrabold text-slate-800 uppercase leading-tight uppercase">Kusnadi</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-16 text-center">
+                            <h4 class="font-black text-slate-400 uppercase tracking-[0.3em] text-xs mb-8 leading-none">Unsur Pembantu (Staf)</h4>
+                            <div class="flex justify-center gap-6">
+                                <div class="bg-slate-100 p-4 rounded-2xl border border-dashed border-slate-300 w-52 transition-all hover:bg-white hover:border-solid hover:shadow-md">
+                                    <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1 leading-none">Staf Operator Desa</p>
+                                    <p class="text-xs font-extrabold text-slate-700 uppercase leading-tight">Dian Ayu Ningrum, S.Pd</p>
+                                </div>
+                                <div class="bg-slate-100 p-4 rounded-2xl border border-dashed border-slate-300 w-52 transition-all hover:bg-white hover:border-solid hover:shadow-md uppercase">
+                                    <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1 leading-none uppercase">Staf Administrasi</p>
+                                    <p class="text-xs font-extrabold text-slate-700 uppercase leading-tight uppercase">Siti Sumarni</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="border-slate-100 mb-24">
+
+                <!-- Struktur BPD -->
+                <header class="text-center mb-24 text-left text-left text-left text-left">
+                    <span class="text-emerald-600 font-bold text-xs tracking-[0.4em] uppercase mb-4 block text-center leading-none uppercase text-left text-left">Lembaga Desa</span>
+                    <h2 class="text-4xl font-extrabold text-slate-900 uppercase tracking-tight text-center leading-none text-left text-left text-left">Struktur Organisasi Badan Permusyawaratan Desa (BPD)</h2>
+                    <div class="w-24 h-2 bg-emerald-500 mx-auto rounded-full mt-8 text-left text-left text-left text-left"></div>
+                </header>
+
+                <div class="mb-16 bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm text-left">
+                    <p class="text-slate-600 leading-relaxed text-lg text-justify uppercase">
+                        Struktur Organisasi Badan Permusyawaratan Desa (BPD) Desa Bukit Bungkul, Kecamatan Renah Pamenang, Kabupaten Merangin dipimpin oleh Ketua BPD, yaitu Makmur Utomo, yang bertugas memimpin seluruh kegiatan dan pelaksanaan fungsi BPD. Dalam menjalankan tugasnya, Ketua BPD didampingi oleh Wakil Ketua, yaitu Sujeng Riyadi, S.Si., M.Pd, yang membantu ketua dalam pelaksanaan tugas serta menggantikan ketua apabila berhalangan. 
+                    </p>
+                    <p class="text-slate-600 leading-relaxed text-lg text-justify mt-4 uppercase">
+                        Selanjutnya, terdapat Sekretaris BPD, yaitu Saiful Amri, yang bertanggung jawab dalam bidang administrasi, pencatatan, dan pengelolaan surat-menyurat serta dokumentasi kegiatan BPD. Untuk mendukung pelaksanaan tugas dan fungsi BPD, dibentuk beberapa bidang, yaitu:
+                    </p>
+                    <ul class="text-slate-600 leading-relaxed text-lg text-justify mt-4 space-y-2 uppercase">
+                        <li>1. Bidang Penyelenggaraan Pemerintahan Desa dan Pembinaan Kemasyarakatan, yang dikoordinatori oleh Mei Yenti dan Sujeng Riyadi, S.Si., M.Pd.</li>
+                        <li>2. Bidang Pembangunan Desa dan Pemberdayaan Masyarakat Desa, yang dijabat oleh Wahyu Dians dan Saiful Amri.</li>
+                    </ul>
+                    <p class="text-slate-600 leading-relaxed text-lg text-justify mt-4 uppercase">
+                        Selain itu, struktur organisasi BPD juga didukung oleh Staf Administrasi yang berperan membantu kelancaran tugas administrasi dan operasional BPD. Dengan susunan struktur tersebut, Badan Permusyawaratan Desa Bukit Bungkul diharapkan mampu menjalankan fungsi legislasi, pengawasan, serta penyaluran aspirasi masyarakat desa secara efektif dan bertanggung jawab.
+                    </p>
+                </div>
+
+                <div id="org-chart-scroll-2" class="w-full overflow-x-auto pb-12 drag-scroll mb-24">
+                    <div class="org-chart-container py-12 px-4 text-center">
+                        <!-- Level 1: Ketua BPD -->
+                        <div class="mb-8">
+                            <div class="inline-block bg-emerald-700 text-white p-6 rounded-2xl shadow-xl border-4 border-white w-72 transition-transform hover:scale-105">
+                                <p class="text-[10px] font-black uppercase tracking-widest opacity-80 mb-2 leading-none">Ketua BPD</p>
+                                <p class="text-xl font-black uppercase leading-tight">Makmur Utomo</p>
+                            </div>
+                        </div>
+                        
+                        <div class="connector-v h-8"></div>
+                        
+                        <!-- Level 2: Wakil & Sekretaris -->
+                        <div class="relative max-w-2xl mx-auto">
+                            <div class="absolute top-0 left-0 right-0 h-0.5 bg-slate-300"></div>
+                            <div class="flex justify-around gap-4 pt-8">
+                                <div class="w-full flex flex-col items-center">
+                                    <div class="connector-v absolute top-0 h-8 -mt-8"></div>
+                                    <div class="bg-slate-800 text-white p-5 rounded-2xl shadow-lg border-4 border-white w-64 transition-transform hover:scale-105">
+                                        <p class="text-[10px] font-black uppercase tracking-widest opacity-80 mb-1 leading-none">Wakil Ketua BPD</p>
+                                        <p class="text-sm font-bold uppercase leading-tight">Sujeng Riyadi, S.Si., M.Pd</p>
+                                    </div>
+                                </div>
+                                <div class="w-full flex flex-col items-center">
+                                    <div class="connector-v absolute top-0 h-8 -mt-8"></div>
+                                    <div class="bg-slate-800 text-white p-5 rounded-2xl shadow-lg border-4 border-white w-64 transition-transform hover:scale-105">
+                                        <p class="text-[10px] font-black uppercase tracking-widest opacity-80 mb-1 leading-none">Sekretaris BPD</p>
+                                        <p class="text-sm font-bold uppercase leading-tight">Saiful Amri</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="connector-v h-12"></div>
+
+                        <!-- Level 3: Bidang-Bidang -->
+                        <div class="relative max-w-4xl mx-auto">
+                            <div class="absolute top-0 left-0 right-0 h-0.5 bg-slate-300"></div>
+                            <div class="flex justify-between gap-4 pt-8">
+                                <div class="w-full flex flex-col items-center">
+                                    <div class="connector-v absolute top-0 h-8 -mt-8"></div>
+                                    <div class="bg-amber-500 text-white p-4 rounded-xl shadow-md border-2 border-white w-72 transition-transform hover:scale-105">
+                                        <p class="text-[9px] font-black uppercase tracking-widest opacity-90 mb-1 leading-none">Bidang Penyelenggaraan Pemerintahan Desa</p>
+                                        <p class="text-xs font-bold mt-2 uppercase">Mei Yenti</p>
+                                        <p class="text-xs font-bold uppercase">Sujeng Riyadi, S.Si., M.Pd</p>
+                                    </div>
+                                </div>
+                                <div class="w-full flex flex-col items-center">
+                                    <div class="connector-v absolute top-0 h-8 -mt-8"></div>
+                                    <div class="bg-blue-600 text-white p-4 rounded-xl shadow-md border-2 border-white w-72 transition-transform hover:scale-105">
+                                        <p class="text-[9px] font-black uppercase tracking-widest opacity-90 mb-1 leading-none">Bidang Pembangunan & Pemberdayaan</p>
+                                        <p class="text-xs font-bold mt-2 uppercase">Wahyu Dians</p>
+                                        <p class="text-xs font-bold uppercase">Saiful Amri</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Level 4: Staf Administrasi -->
+                        <div class="mt-16 text-center">
+                            <div class="inline-block bg-slate-100 p-4 rounded-2xl border border-dashed border-slate-300 w-52 transition-all hover:bg-white hover:border-solid hover:shadow-md">
+                                <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1 leading-none">Staf Administrasi BPD</p>
+                                <p class="text-xs font-extrabold text-slate-700 uppercase">Bagian Administrasi</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="border-slate-100 mb-24">
+
+                <!-- Struktur PKK -->
+                <header class="text-center mb-24">
+                    <span class="text-emerald-600 font-bold text-xs tracking-[0.4em] uppercase mb-4 block text-center leading-none">Gerakan Pemberdayaan Keluarga</span>
+                    <h2 class="text-4xl font-extrabold text-slate-900 uppercase tracking-tight text-center leading-none">Struktur Organisasi TP-PKK Desa Bukit Bungkul</h2>
+                    <div class="w-24 h-2 bg-emerald-500 mx-auto rounded-full mt-8"></div>
+                </header>
+
+                <div class="mb-16 bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm text-left">
+                    <p class="text-slate-600 leading-relaxed text-lg text-justify uppercase">
+                        Tim Penggerak Pemberdayaan dan Kesejahteraan Keluarga (TP-PKK) Desa Bukit Bungkul dipimpin oleh Ketua, yaitu Ika Kurniati, S.Pd. Dalam menjalankan roda organisasi, beliau dibantu oleh Wakil Ketua Nani Nurhasanah. Pengelolaan administrasi ditangani oleh Sekretaris I Ani Riyanti dan Sekretaris II Marni, S.Pd, sementara pengelolaan keuangan dipercayakan kepada Bendahara I Yuli Listiani, S.Pd. TP-PKK Bukit Bungkul terbagi ke dalam empat kelompok kerja (POKJA) yang menangani bidang-bidang strategis kesejahteraan masyarakat.
+                    </p>
+                </div>
+
+                <div id="org-chart-scroll-3" class="w-full overflow-x-auto pb-12 drag-scroll mb-24">
+                    <div class="org-chart-container py-12 px-4 text-center">
+                        <!-- Level 1: Ketua -->
+                        <div class="mb-8">
+                            <div class="inline-block bg-emerald-600 text-white p-6 rounded-2xl shadow-xl border-4 border-white w-72 transition-transform hover:scale-105">
+                                <p class="text-[10px] font-black uppercase tracking-widest opacity-80 mb-2 leading-none">Ketua TP-PKK</p>
+                                <p class="text-xl font-black uppercase leading-tight">Ika Kurniati, S.Pd</p>
+                            </div>
+                        </div>
+
+                        <div class="connector-v h-8"></div>
+
+                        <!-- Level 2: Wakil, Sekretaris, Bendahara -->
+                        <div class="relative max-w-4xl mx-auto">
+                            <div class="absolute top-0 left-0 right-0 h-0.5 bg-slate-300"></div>
+                            <div class="flex justify-between gap-4 pt-8">
+                                <div class="w-full flex flex-col items-center">
+                                    <div class="connector-v absolute top-0 h-8 -mt-8"></div>
+                                    <div class="bg-slate-800 text-white p-4 rounded-xl shadow-md border-2 border-white w-56 transition-transform hover:scale-105">
+                                        <p class="text-[9px] font-black uppercase tracking-widest opacity-80 mb-1 leading-none">Wakil Ketua</p>
+                                        <p class="text-sm font-bold uppercase">Nani Nurhasanah</p>
+                                    </div>
+                                </div>
+                                <div class="w-full flex flex-col items-center">
+                                    <div class="connector-v absolute top-0 h-8 -mt-8"></div>
+                                    <div class="bg-slate-800 text-white p-4 rounded-xl shadow-md border-2 border-white w-56 transition-transform hover:scale-105">
+                                        <p class="text-[9px] font-black uppercase tracking-widest opacity-80 mb-1 leading-none">Sekretaris I & II</p>
+                                        <p class="text-sm font-bold uppercase">Ani Riyanti</p>
+                                        <p class="text-xs opacity-90 uppercase">Marni, S.Pd</p>
+                                    </div>
+                                </div>
+                                <div class="w-full flex flex-col items-center">
+                                    <div class="connector-v absolute top-0 h-8 -mt-8"></div>
+                                    <div class="bg-slate-800 text-white p-4 rounded-xl shadow-md border-2 border-white w-56 transition-transform hover:scale-105">
+                                        <p class="text-[9px] font-black uppercase tracking-widest opacity-80 mb-1 leading-none">Bendahara I</p>
+                                        <p class="text-sm font-bold uppercase">Yuli Listiani, S.Pd</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="connector-v h-12"></div>
+
+                        <!-- Level 3: POKJA -->
+                        <div class="relative max-w-6xl mx-auto">
+                            <div class="absolute top-0 left-0 right-0 h-0.5 bg-slate-300"></div>
+                            <div class="flex justify-between gap-4 pt-8">
+                                <!-- POKJA I -->
+                                <div class="w-full flex flex-col items-center">
+                                    <div class="connector-v absolute top-0 h-8 -mt-8"></div>
+                                    <div class="bg-emerald-50 p-5 rounded-[2rem] border border-emerald-100 w-64 shadow-sm text-left">
+                                        <div class="flex items-center gap-2 mb-3">
+                                            <div class="bg-emerald-600 text-white p-1.5 rounded-lg leading-none"><i data-lucide="shield-check" class="w-4 h-4"></i></div>
+                                            <span class="text-[10px] font-black text-emerald-800 uppercase tracking-widest">POKJA I</span>
+                                        </div>
+                                        <p class="text-[9px] text-slate-500 font-bold mb-3 leading-tight uppercase">Penghayatan Pancasila & Gotong Royong</p>
+                                        <div class="space-y-1 text-[11px] font-bold text-slate-700 uppercase">
+                                            <p><span class="text-emerald-600">Ket:</span> Sri Susanti</p>
+                                            <p><span class="text-emerald-600">Wak:</span> Sulastri</p>
+                                            <p><span class="text-emerald-600">Sek:</span> Aldias Meinanti</p>
+                                            <div class="mt-2 pt-2 border-t border-emerald-100">
+                                                <p class="text-[9px] text-slate-400 mb-1">Anggota:</p>
+                                                <p>Siti Zamzanah, Fitri Sunariyah</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- POKJA II -->
+                                <div class="w-full flex flex-col items-center">
+                                    <div class="connector-v absolute top-0 h-8 -mt-8"></div>
+                                    <div class="bg-blue-50 p-5 rounded-[2rem] border border-blue-100 w-64 shadow-sm text-left">
+                                        <div class="flex items-center gap-2 mb-3">
+                                            <div class="bg-blue-600 text-white p-1.5 rounded-lg leading-none"><i data-lucide="book-open" class="w-4 h-4"></i></div>
+                                            <span class="text-[10px] font-black text-blue-800 uppercase tracking-widest">POKJA II</span>
+                                        </div>
+                                        <p class="text-[9px] text-slate-500 font-bold mb-3 leading-tight uppercase">Pendidikan & Koperasi</p>
+                                        <div class="space-y-1 text-[11px] font-bold text-slate-700 uppercase">
+                                            <p><span class="text-blue-600">Ket:</span> Sri Sukarni</p>
+                                            <p><span class="text-blue-600">Wak:</span> Dalminah, S.S</p>
+                                            <p><span class="text-blue-600">Sek:</span> Mei Yenti</p>
+                                            <div class="mt-2 pt-2 border-t border-blue-100">
+                                                <p class="text-[9px] text-slate-400 mb-1">Anggota:</p>
+                                                <p>Dian Ayu Ningrum, S.Pd, Rumiyatiningsih</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- POKJA III -->
+                                <div class="w-full flex flex-col items-center">
+                                    <div class="connector-v absolute top-0 h-8 -mt-8"></div>
+                                    <div class="bg-amber-500 text-white p-1.5 rounded-lg leading-none"><i data-lucide="utensils" class="w-4 h-4"></i></div>
+                                    <div class="bg-amber-500 text-white p-4 rounded-xl shadow-md border-2 border-white w-64 transition-transform hover:scale-105">
+                                        <p class="text-[9px] font-black uppercase tracking-widest opacity-90 mb-1 leading-none">Bidang Penyelenggaraan Pemerintahan Desa</p>
+                                        <p class="text-xs font-bold mt-2 uppercase">Mei Yenti</p>
+                                        <p class="text-xs font-bold uppercase">Sujeng Riyadi, S.Si., M.Pd</p>
+                                    </div>
+                                </div>
+                                <!-- POKJA IV -->
+                                <div class="w-full flex flex-col items-center">
+                                    <div class="connector-v absolute top-0 h-8 -mt-8"></div>
+                                    <div class="bg-rose-50 p-5 rounded-[2rem] border border-rose-100 w-64 shadow-sm text-left">
+                                        <div class="flex items-center gap-2 mb-3">
+                                            <div class="bg-rose-600 text-white p-1.5 rounded-lg leading-none"><i data-lucide="heart" class="w-4 h-4"></i></div>
+                                            <span class="text-[10px] font-black text-rose-800 uppercase tracking-widest">POKJA IV</span>
+                                        </div>
+                                        <p class="text-[9px] text-slate-500 font-bold mb-3 leading-tight uppercase">Kesehatan & Lingkungan Hidup</p>
+                                        <div class="space-y-1 text-[11px] font-bold text-slate-700 uppercase">
+                                            <p><span class="text-rose-600">Ket:</span> Rina Permata Sari</p>
+                                            <p><span class="text-rose-600">Wak:</span> Ester Warniasih</p>
+                                            <p><span class="text-rose-600">Sek:</span> Mugi Rahayu</p>
+                                            <div class="mt-2 pt-2 border-t border-rose-100">
+                                                <p class="text-[9px] text-slate-400 mb-1">Anggota:</p>
+                                                <p>Ika Sutika, Rubiyati, Sukarmi, Carolina</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="border-slate-100 mb-24">
+
+                <!-- Struktur Karang Taruna -->
+                <header class="text-center mb-24">
+                    <span class="text-emerald-600 font-bold text-xs tracking-[0.4em] uppercase mb-4 block text-center leading-none">Generasi Muda Desa</span>
+                    <h2 class="text-4xl font-extrabold text-slate-900 uppercase tracking-tight text-center leading-none">Struktur Organisasi Karang Taruna</h2>
+                    <div class="w-24 h-2 bg-emerald-500 mx-auto rounded-full mt-8"></div>
+                </header>
+
+                <div class="mb-16 bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm text-left">
+                    <p class="text-slate-600 leading-relaxed text-lg text-justify uppercase">
+                        Karang Taruna Desa Bukit Bungkul merupakan wadah pengembangan generasi muda yang aktif dalam memajukan desa. Dipimpin oleh Ketua Agus Purnomo dan didampingi Wakil Ketua Wawan Prastyono. Dalam aspek administratif, organisasi ini dibina oleh Pembina yang terdiri dari Kepala Desa dan BPD, serta mendapatkan arahan strategis dari Penasehat Koko Baskoro, S.Pd dan Erly Wahyu Qodri. Pengelolaan operasional harian didukung oleh Sekretaris dan Bendahara, serta berbagai divisi teknis yang menangani bidang olahraga, keagamaan, kesenian, pendidikan, hingga hubungan masyarakat.
+                    </p>
+                </div>
+
+                <div id="org-chart-scroll-4" class="w-full overflow-x-auto pb-12 drag-scroll mb-24">
+                    <div class="org-chart-container py-12 px-4 text-center">
+                        <!-- Level: Pembina & Penasehat -->
+                        <div class="flex justify-center gap-12 mb-8">
+                            <div class="bg-slate-100 p-4 rounded-2xl border-2 border-slate-200 w-64">
+                                <p class="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-1">Pembina</p>
+                                <p class="text-xs font-bold uppercase">Kepala Desa Bukit Bungkul</p>
+                                <p class="text-xs font-bold uppercase">BPD Bukit Bungkul</p>
+                            </div>
+                            <div class="bg-slate-100 p-4 rounded-2xl border-2 border-slate-200 w-64">
+                                <p class="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-1">Penasehat</p>
+                                <p class="text-xs font-bold uppercase">Koko Baskoro, S.Pd</p>
+                                <p class="text-xs font-bold uppercase">Erly Wahyu Qodri</p>
+                            </div>
+                        </div>
+
+                        <div class="connector-v h-8"></div>
+
+                        <!-- Level 1: Ketua -->
+                        <div class="mb-8">
+                            <div class="inline-block bg-emerald-600 text-white p-6 rounded-2xl shadow-xl border-4 border-white w-72 transition-transform hover:scale-105">
+                                <p class="text-[10px] font-black uppercase tracking-widest opacity-80 mb-2 leading-none">Ketua Karang Taruna</p>
+                                <p class="text-xl font-black uppercase leading-tight">Agus Purnomo</p>
+                            </div>
+                        </div>
+
+                        <div class="connector-v h-8"></div>
+
+                        <!-- Level 2: Wakil Ketua -->
+                        <div class="mb-8">
+                            <div class="inline-block bg-slate-800 text-white p-5 rounded-2xl shadow-lg border-4 border-white w-64 transition-transform hover:scale-105">
+                                <p class="text-[10px] font-black uppercase tracking-widest opacity-80 mb-1 leading-none">Wakil Ketua</p>
+                                <p class="text-lg font-bold uppercase">Wawan Prastyono</p>
+                            </div>
+                        </div>
+
+                        <div class="connector-v h-8"></div>
+
+                        <!-- Level 3: Sekretaris & Bendahara -->
+                        <div class="relative max-w-4xl mx-auto">
+                            <div class="absolute top-0 left-0 right-0 h-0.5 bg-slate-300"></div>
+                            <div class="flex justify-around gap-4 pt-8">
+                                <div class="w-full flex flex-col items-center">
+                                    <div class="connector-v absolute top-0 h-8 -mt-8"></div>
+                                    <div class="bg-blue-600 text-white p-4 rounded-xl shadow-md border-2 border-white w-64 transition-transform hover:scale-105">
+                                        <p class="text-[9px] font-black uppercase tracking-widest opacity-80 mb-1 leading-none">Sekretaris I & II</p>
+                                        <p class="text-sm font-bold uppercase">Ardi Kurniawan</p>
+                                        <p class="text-xs opacity-90 uppercase">Kirani Haffijah Octaviana</p>
+                                    </div>
+                                </div>
+                                <div class="w-full flex flex-col items-center">
+                                    <div class="connector-v absolute top-0 h-8 -mt-8"></div>
+                                    <div class="bg-blue-600 text-white p-4 rounded-xl shadow-md border-2 border-white w-64 transition-transform hover:scale-105">
+                                        <p class="text-[9px] font-black uppercase tracking-widest opacity-80 mb-1 leading-none">Bendahara I & II</p>
+                                        <p class="text-sm font-bold uppercase">Triyono</p>
+                                        <p class="text-xs opacity-90 uppercase">Riko Tri Harmono</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seksi-Seksi Karang Taruna -->
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24">
+                    <!-- Seksi Olahraga -->
+                    <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="bg-emerald-100 text-emerald-600 p-2 rounded-xl"><i data-lucide="trophy" class="w-5 h-5"></i></div>
+                            <h4 class="font-black text-slate-900 uppercase tracking-tight leading-none">Seksi Olahraga</h4>
+                        </div>
+                        <div class="grid grid-cols-2 gap-x-4 gap-y-2 text-xs font-bold text-slate-600 uppercase">
+                            <p>1. Iskandar Z.</p>
+                            <p>2. Nuha</p>
+                            <p>3. Agit</p>
+                            <p>4. Wawan Cahyo</p>
+                            <p>5. Albab</p>
+                            <p>6. Lisa</p>
+                            <p>7. Alan Ariyanto</p>
+                            <p>8. Novirul</p>
+                            <p>9. Asep Fitroh M.</p>
+                            <p>10. Puja</p>
+                            <p>11. Difa</p>
+                            <p>12. Syaiful</p>
+                            <p>13. Robi</p>
+                        </div>
+                    </div>
+
+                    <!-- Seksi Keagamaan -->
+                    <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="bg-amber-100 text-amber-600 p-2 rounded-xl"><i data-lucide="moon-star" class="w-5 h-5"></i></div>
+                            <h4 class="font-black text-slate-900 uppercase tracking-tight leading-none">Seksi Keagamaan</h4>
+                        </div>
+                        <div class="grid grid-cols-2 gap-x-4 gap-y-2 text-xs font-bold text-slate-600 uppercase">
+                            <p>1. Herta Hesty</p>
+                            <p>2. Nur Okvi</p>
+                            <p>3. Nena</p>
+                            <p>4. Shalsa</p>
+                            <p>5. Agesa Avif R.</p>
+                            <p>6. Lucky</p>
+                            <p>7. Devi</p>
+                            <p>8. Holid</p>
+                            <p>9. Mulyadi</p>
+                            <p>10. Danang</p>
+                            <p>11. Wening</p>
+                            <p>12. Rika</p>
+                        </div>
+                    </div>
+
+                    <!-- Seksi Humas -->
+                    <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="bg-blue-100 text-blue-600 p-2 rounded-xl"><i data-lucide="megaphone" class="w-5 h-5"></i></div>
+                            <h4 class="font-black text-slate-900 uppercase tracking-tight leading-none">Seksi Humas</h4>
+                        </div>
+                        <div class="grid grid-cols-2 gap-x-4 gap-y-2 text-xs font-bold text-slate-600 uppercase">
+                            <p>1. Randi</p>
+                            <p>2. Davit</p>
+                            <p>3. Ferdian</p>
+                            <p>4. Ahmad</p>
+                            <p>5. Dika</p>
+                            <p>6. Rahmad</p>
+                            <p>7. Tria</p>
+                            <p>8. Dedek</p>
+                            <p>9. Anung</p>
+                        </div>
+                    </div>
+
+                    <!-- Seksi Kesenian -->
+                    <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="bg-rose-100 text-rose-600 p-2 rounded-xl"><i data-lucide="music" class="w-5 h-5"></i></div>
+                            <h4 class="font-black text-slate-900 uppercase tracking-tight leading-none">Seksi Kesenian</h4>
+                        </div>
+                        <div class="space-y-2 text-xs font-bold text-slate-600 uppercase">
+                            <p>1. Feri</p>
+                            <p>2. Rizal</p>
+                            <p>3. Sarah</p>
+                            <p>4. Lifa</p>
+                            <p>5. Ahmad K.</p>
+                        </div>
+                    </div>
+
+                    <!-- Seksi Pendidikan & Infokum -->
+                    <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="bg-purple-100 text-purple-600 p-2 rounded-xl"><i data-lucide="graduation-cap" class="w-5 h-5"></i></div>
+                            <h4 class="font-black text-slate-900 uppercase tracking-tight leading-none">Pendidikan & Infokum</h4>
+                        </div>
+                        <div class="space-y-2 text-xs font-bold text-slate-600 uppercase">
+                            <p>1. Dani</p>
+                            <p>2. Ismail</p>
+                            <p>3. Ferdi</p>
+                            <p>4. Sadam</p>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="text-center text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-4 leading-none"><i data-lucide="hand-metal" class="w-3 h-3 inline"></i> Geser ke samping untuk melihat seluruh bagan</p>
+            </div>
+        </section>
+
+        <!-- BAGIAN: SOSIAL (PENDIDIKAN, KESEHATAN, RELIGI) -->
+        <section id="page-sosial" class="page-content py-24">
+            <div class="max-w-7xl mx-auto px-6">
+                <header class="text-center mb-24">
+                    <span class="text-emerald-600 font-bold text-xs tracking-[0.4em] uppercase mb-4 block text-center leading-none">Pilar Kesejahteraan</span>
+                    <h2 class="text-5xl font-extrabold text-slate-900 uppercase tracking-tight text-center leading-none">Kehidupan Sosial Masyarakat</h2>
+                    <div class="w-24 h-2 bg-emerald-500 mx-auto mt-8 rounded-full"></div>
+                </header>
+
+                <!-- Pendidikan Section -->
+                <div class="mb-24">
+                    <div class="flex items-center gap-4 mb-12">
+                        <div class="bg-blue-600 text-white p-4 rounded-[1.5rem] shadow-lg"><i data-lucide="school"></i></div>
+                        <div>
+                            <h3 class="text-3xl font-black text-slate-900 uppercase tracking-tight">Fasilitas & Akses Pendidikan</h3>
+                            <p class="text-slate-500 text-sm font-bold uppercase">Layanan Pendidikan Berkualitas bagi Warga</p>
+                        </div>
+                    </div>
+
+                    <div class="grid lg:grid-cols-2 gap-8 mb-12">
+                        <!-- PAUD Cards -->
+                        <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm">
+                            <h4 class="text-xl font-black text-blue-600 mb-6 flex items-center gap-2"><i data-lucide="baby" class="w-5 h-5"></i> PENDIDIKAN ANAK USIA DINI (PAUD)</h4>
+                            <div class="space-y-6">
+                                <div class="bg-slate-50 p-6 rounded-3xl border-l-4 border-amber-400">
+                                    <p class="font-black text-slate-800 uppercase mb-2">PAUD Cempaka Putih (Swasta)</p>
+                                    <div class="text-[11px] text-slate-500 space-y-1 uppercase font-bold">
+                                        <p>Siswa: 16 | Guru: 2 (Tetap)</p>
+                                        <p>Fasilitas: 1 Kelas, Toilet, Lapangan</p>
+                                        <p class="text-rose-500 font-black"><i data-lucide="alert-circle" class="w-3 h-3 inline"></i> Status Bangunan: Perlu Perbaikan</p>
+                                    </div>
+                                </div>
+                                <div class="bg-slate-50 p-6 rounded-3xl border-l-4 border-emerald-400">
+                                    <p class="font-black text-slate-800 uppercase mb-2">PAUD Intan Pelangi (Swasta)</p>
+                                    <div class="text-[11px] text-slate-500 space-y-1 uppercase font-bold">
+                                        <p>Siswa: 13 | Guru: 4 (Honorer)</p>
+                                        <p>Kurikulum: Merdeka (Kumer)</p>
+                                        <p class="text-rose-500 font-black"><i data-lucide="alert-circle" class="w-3 h-3 inline"></i> Status: Belum memiliki Ruang Kelas tetap</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TK Cards -->
+                        <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm">
+                            <h4 class="text-xl font-black text-blue-600 mb-6 flex items-center gap-2"><i data-lucide="smile" class="w-5 h-5"></i> TAMAN KANAK-KANAK (TK)</h4>
+                            <div class="space-y-6">
+                                <div class="bg-slate-50 p-6 rounded-3xl border-l-4 border-amber-400">
+                                    <p class="font-black text-slate-800 uppercase mb-2">TK Cempaka Putih</p>
+                                    <div class="text-[11px] text-slate-500 space-y-1 uppercase font-bold">
+                                        <p>Siswa: 19 | Guru: 2 (Tetap)</p>
+                                        <p>Tantangan: Kurang Guru & Jalan Rusak Becek</p>
+                                    </div>
+                                </div>
+                                <div class="bg-slate-50 p-6 rounded-3xl border-l-4 border-emerald-400">
+                                    <p class="font-black text-slate-800 uppercase mb-2">TK Masyithoh</p>
+                                    <div class="text-[11px] text-slate-500 space-y-1 uppercase font-bold">
+                                        <p>Siswa: 43 | Guru: 5 (3 Tetap, 2 Honor)</p>
+                                        <p>Program: Manasik Haji, Lomba Mewarnai</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sekolah Dasar & Menengah -->
+                    <div class="grid lg:grid-cols-3 gap-8">
+                        <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm lg:col-span-2">
+                            <h4 class="text-xl font-black text-blue-600 mb-6 flex items-center gap-2"><i data-lucide="book-open" class="w-5 h-5"></i> SEKOLAH DASAR & MENENGAH</h4>
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div class="p-6 bg-slate-50 rounded-3xl">
+                                    <span class="bg-blue-600 text-white px-3 py-1 rounded-full text-[9px] font-black uppercase">Negeri</span>
+                                    <p class="font-black text-slate-800 uppercase mt-3 mb-2">SDN 193/VI (Sejak 1981)</p>
+                                    <p class="text-[10px] text-slate-500 leading-relaxed uppercase font-bold">Siswa: 273 | Guru: 16. Kondisi Bangunan Baik. Fasilitas: Perpustakaan, UKS, 9 Rombel.</p>
+                                </div>
+                                <div class="p-6 bg-slate-50 rounded-3xl">
+                                    <span class="bg-blue-600 text-white px-3 py-1 rounded-full text-[9px] font-black uppercase">Negeri</span>
+                                    <p class="font-black text-slate-800 uppercase mt-3 mb-2">SDN 264/VI (Bukit Bungkul II)</p>
+                                    <p class="text-[10px] text-slate-500 leading-relaxed uppercase font-bold">Sejak 1982. Akreditasi B. Siswa: 117 | Guru: 9. Lokasi Strategis di wilayah desa.</p>
+                                </div>
+                                <div class="p-6 bg-slate-50 rounded-3xl">
+                                    <span class="bg-amber-500 text-white px-3 py-1 rounded-full text-[9px] font-black uppercase">Swasta</span>
+                                    <p class="font-black text-slate-800 uppercase mt-3 mb-2">MTs Al Khoiriyah</p>
+                                    <p class="text-[10px] text-slate-500 leading-relaxed uppercase font-bold">Siswa: 139 | Guru: 16. Kurikulum Merdeka. Memerlukan Guru Olahraga tetap.</p>
+                                </div>
+                                <div class="p-6 bg-emerald-600 text-white rounded-3xl">
+                                    <span class="bg-white text-emerald-600 px-3 py-1 rounded-full text-[9px] font-black uppercase">Pusat Keunggulan</span>
+                                    <p class="font-black uppercase mt-3 mb-2">SMKN 5 Merangin</p>
+                                    <p class="text-[10px] opacity-90 leading-relaxed uppercase font-bold">DKV & Sekolah PK. Siswa: 345 | Guru: 35. Luas Lahan: 18.352 m². Fokus: Karakter & Kerja.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-emerald-900 text-white p-8 rounded-[2.5rem] flex flex-col justify-center shadow-xl">
+                            <i data-lucide="award" class="w-12 h-12 mb-6 text-emerald-400"></i>
+                            <h4 class="text-2xl font-black mb-4 uppercase tracking-tighter">Visi Pendidikan Desa</h4>
+                            <p class="text-sm opacity-80 leading-relaxed text-justify uppercase font-bold">Mewujudkan generasi Bukit Bungkul yang cerdas, bertakwa, dan memiliki karakter Pancasila yang kuat.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kesehatan & Sanitasi -->
+                <div class="mb-24">
+                    <div class="flex items-center gap-4 mb-12">
+                        <div class="bg-rose-600 text-white p-4 rounded-[1.5rem] shadow-lg"><i data-lucide="heart-pulse"></i></div>
+                        <div>
+                            <h3 class="text-3xl font-black text-slate-900 uppercase tracking-tight">Kesehatan Masyarakat</h3>
+                            <p class="text-slate-500 text-sm font-bold uppercase">Layanan Medis & Lingkungan Bersih</p>
+                        </div>
+                    </div>
+
+                    <div class="grid lg:grid-cols-3 gap-8">
+                        <div class="bg-white p-10 rounded-[3rem] border border-slate-100 shadow-sm lg:col-span-2">
+                            <h4 class="text-xl font-black text-rose-600 mb-8 uppercase">Akses Medis & Tenaga Kesehatan</h4>
+                            <div class="grid md:grid-cols-2 gap-6 mb-8">
+                                <div class="bg-slate-50 p-6 rounded-3xl">
+                                    <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-2">Fasilitas Utama</p>
+                                    <p class="text-sm font-black text-slate-800 uppercase">Puskesmas Pembantu (Pustu)</p>
+                                    <p class="text-[10px] text-slate-500 mt-2 uppercase font-bold">Melayani KIA, KB, Imunisasi, dan rujukan awal ke tingkat Kecamatan/Kabupaten.</p>
+                                </div>
+                                <div class="bg-slate-50 p-6 rounded-3xl">
+                                    <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-2">Tenaga Medis Aktif</p>
+                                    <div class="flex items-center gap-4">
+                                        <div class="text-center">
+                                            <p class="text-2xl font-black text-rose-600 leading-none">3</p>
+                                            <p class="text-[8px] font-bold uppercase">Bidan</p>
+                                        </div>
+                                        <div class="w-px h-10 bg-slate-200"></div>
+                                        <div class="text-center">
+                                            <p class="text-2xl font-black text-rose-600 leading-none">50</p>
+                                            <p class="text-[8px] font-bold uppercase">Kader</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="space-y-4">
+                                <p class="text-[10px] font-black text-slate-400 tracking-widest uppercase">Jejaring Posyandu Dusun (Update: Rutin tgl 8)</p>
+                                <div class="flex flex-wrap gap-3 uppercase font-black text-[9px]">
+                                    <span class="bg-rose-50 text-rose-700 px-4 py-2 rounded-xl border border-rose-100">Flamboyan (Sidomulyo)</span>
+                                    <span class="bg-rose-50 text-rose-700 px-4 py-2 rounded-xl border border-rose-100">Teratai Putih (Rejomulyo)</span>
+                                    <span class="bg-rose-50 text-rose-700 px-4 py-2 rounded-xl border border-rose-100">Bangkit Sehat (Sidorejo)</span>
+                                    <span class="bg-rose-50 text-rose-700 px-4 py-2 rounded-xl border border-rose-100">Mekar Sari (Sukamaju)</span>
+                                    <span class="bg-rose-50 text-rose-700 px-4 py-2 rounded-xl border border-rose-100">Restu Ibu (Madusari)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white p-10 rounded-[3rem] border border-slate-100 shadow-sm">
+                            <h4 class="text-xl font-black text-emerald-600 mb-8 uppercase">Sanitasi & PHBS</h4>
+                            <div class="space-y-6 uppercase font-bold text-xs">
+                                <div class="flex gap-3 items-start">
+                                    <div class="bg-emerald-100 p-2 rounded-lg text-emerald-600 leading-none"><i data-lucide="check" class="w-4 h-4"></i></div>
+                                    <p class="text-slate-600">Akses Air Bersih: Aman (Sumur Gali/PAM)</p>
+                                </div>
+                                <div class="flex gap-3 items-start">
+                                    <div class="bg-emerald-100 p-2 rounded-lg text-emerald-600 leading-none"><i data-lucide="check" class="w-4 h-4"></i></div>
+                                    <p class="text-slate-600">PHBS: Mencuci tangan & kebersihan rumah tangga.</p>
+                                </div>
+                                <div class="flex gap-3 items-start text-rose-500">
+                                    <div class="bg-rose-100 p-2 rounded-lg leading-none"><i data-lucide="alert-triangle" class="w-4 h-4"></i></div>
+                                    <p>Tantangan: Praktik buang sampah dibakar & BAB di sungai (minor).</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Keagamaan & Gotong Royong -->
+                <div class="grid lg:grid-cols-2 gap-12">
+                    <div class="bg-white p-10 rounded-[3rem] border border-slate-100 shadow-sm">
+                        <h4 class="text-xl font-black text-amber-600 mb-8 uppercase flex items-center gap-3"><i data-lucide="moon-star"></i> Keagamaan & Toleransi</h4>
+                        <div class="grid grid-cols-3 gap-4 mb-8">
+                            <div class="bg-slate-50 p-4 rounded-2xl text-center border border-slate-100 shadow-sm">
+                                <p class="text-2xl font-black text-slate-800">6</p>
+                                <p class="text-[9px] font-bold text-slate-400 uppercase">Masjid</p>
+                            </div>
+                            <div class="bg-slate-50 p-4 rounded-2xl text-center border border-slate-100 shadow-sm">
+                                <p class="text-2xl font-black text-slate-800">9</p>
+                                <p class="text-[9px] font-bold text-slate-400 uppercase">Musala</p>
+                            </div>
+                            <div class="bg-slate-50 p-4 rounded-2xl text-center border border-slate-100 shadow-sm">
+                                <p class="text-2xl font-black text-slate-800">2</p>
+                                <p class="text-[9px] font-bold text-slate-400 uppercase">Gereja</p>
+                            </div>
+                        </div>
+                        <p class="text-[11px] text-slate-500 leading-relaxed text-justify uppercase font-bold">Kegiatan rutin seperti Yasinan, Pengajian Ibu-ibu, dan Israel Mi'raj berjalan aktif dengan partisipasi mencapai 70% warga desa. Keharmonisan ini menjadi pondasi persatuan nasional di tingkat desa.</p>
+                    </div>
+
+                    <div class="bg-white p-10 rounded-[3rem] border border-slate-100 shadow-sm">
+                        <h4 class="text-xl font-black text-emerald-600 mb-8 uppercase flex items-center gap-3"><i data-lucide="users-2"></i> Jadwal Gotong Royong Dusun</h4>
+                        <div class="space-y-3 font-black text-[10px] tracking-tight">
+                            <div class="flex justify-between p-3 bg-slate-50 rounded-xl"><span>MADUSARI</span> <span class="text-emerald-600">SETIAP TGL 21</span></div>
+                            <div class="flex justify-between p-3 bg-slate-50 rounded-xl"><span>SIDOMULYO</span> <span class="text-emerald-600">MINGGU TERAKHIR BULAN</span></div>
+                            <div class="flex justify-between p-3 bg-slate-50 rounded-xl"><span>SIDOREJO</span> <span class="text-emerald-600">KOORDINASI IBU PKK</span></div>
+                            <div class="flex justify-between p-3 bg-slate-50 rounded-xl"><span>REJOMULYO & SUKAMAJU</span> <span class="text-emerald-600">FLEKSIBEL / KONDISIONAL</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BAGIAN: EKONOMI (PEKERJAAN, SEKTOR UNGGULAN, INFRASTRUKTUR) -->
+        <section id="page-ekonomi" class="page-content py-24">
+            <div class="max-w-7xl mx-auto px-6">
+                <header class="text-center mb-24">
+                    <span class="text-emerald-600 font-bold text-xs tracking-[0.4em] uppercase mb-4 block text-center leading-none">Ketahanan Ekonomi</span>
+                    <h2 class="text-5xl font-extrabold text-slate-900 uppercase tracking-tight text-center leading-none">Sektor & Potensi Ekonomi</h2>
+                    <div class="w-24 h-2 bg-emerald-500 mx-auto mt-8 rounded-full"></div>
+                </header>
+
+                <!-- Tenaga Kerja & Pendapatan -->
+                <div class="bg-white p-12 rounded-[3rem] border border-slate-100 shadow-sm mb-24">
+                    <div class="flex flex-col lg:flex-row gap-12 items-start">
+                        <div class="lg:w-1/3">
+                            <div class="bg-emerald-600 text-white p-8 rounded-[2.5rem] shadow-xl">
+                                <p class="text-[10px] font-black uppercase tracking-widest opacity-80 mb-2">Rata-rata Pendapatan Desa</p>
+                                <p class="text-4xl font-black mb-6">Rp 3,8 JT</p>
+                                <div class="space-y-4">
+                                    <div class="p-4 bg-white/10 rounded-2xl backdrop-blur-md">
+                                        <p class="text-[9px] font-bold uppercase opacity-80">Usia Produktif (15-64th)</p>
+                                        <p class="text-xl font-black">65%</p>
+                                    </div>
+                                    <p class="text-[10px] font-bold italic uppercase leading-relaxed">Ekonomi didominasi sektor perkebunan karet dan hortikultura dengan keterlibatan tenaga kerja lokal yang tinggi.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lg:w-2/3 w-full overflow-x-auto">
+                            <h4 class="text-2xl font-black text-slate-900 mb-8 uppercase">Sebaran Pekerjaan & Penghasilan</h4>
+                            <table class="w-full text-left">
+                                <thead class="bg-slate-50 text-[10px] font-black uppercase tracking-widest text-slate-500">
+                                    <tr><th class="p-4">Jenis Pekerjaan</th><th class="p-4 text-center">Jumlah</th><th class="p-4 text-center">%</th><th class="p-4 text-right">Rata Pendapatan</th></tr>
+                                </thead>
+                                <tbody class="text-[11px] font-bold text-slate-600 uppercase divide-y divide-slate-50">
+                                    <tr><td class="p-4">Petani / Perkebunan</td><td class="p-4 text-center">605</td><td class="p-4 text-center">51%</td><td class="p-4 text-right">Rp 4.000.000</td></tr>
+                                    <tr><td class="p-4">Buruh Tani</td><td class="p-4 text-center">275</td><td class="p-4 text-center">24%</td><td class="p-4 text-right">Rp 3.000.000</td></tr>
+                                    <tr><td class="p-4">PNS / POLRI / TNI</td><td class="p-4 text-center">49</td><td class="p-4 text-center">0.04%</td><td class="p-4 text-right">Rp 5.000.000</td></tr>
+                                    <tr><td class="p-4">Pedagang / Warung</td><td class="p-4 text-center">87</td><td class="p-4 text-center">4.00%</td><td class="p-4 text-right">Rp 1.500.000</td></tr>
+                                    <tr><td class="p-4">Karyawan Swasta</td><td class="p-4 text-center">45</td><td class="p-4 text-center">0.03%</td><td class="p-4 text-right">Rp 3.200.000</td></tr>
+                                    <tr><td class="p-4">Tukang Bangunan</td><td class="p-4 text-center">43</td><td class="p-4 text-center">0.03%</td><td class="p-4 text-right">Rp 3.000.000</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sektor Unggulan & UMKM -->
+                <div class="grid lg:grid-cols-2 gap-12 mb-24">
+                    <div class="bg-white p-10 rounded-[3rem] border border-slate-100 shadow-sm">
+                        <h4 class="text-xl font-black text-emerald-600 mb-8 uppercase flex items-center gap-3"><i data-lucide="tractor"></i> Sektor Komoditas Unggulan</h4>
+                        <div class="grid grid-cols-2 gap-6 font-black text-[10px] uppercase">
+                            <div class="p-4 bg-emerald-50 rounded-2xl text-emerald-700">PERKEBUNAN: Karet & Kelapa</div>
+                            <div class="p-4 bg-emerald-50 rounded-2xl text-emerald-700">PERTANIAN: Cabe & Sayuran</div>
+                            <div class="p-4 bg-amber-50 rounded-2xl text-amber-700">TERNAK: Sapi, Kambing, Ayam</div>
+                            <div class="p-4 bg-blue-50 rounded-2xl text-blue-700">IKAN: Nila & Lele (Tambak)</div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-10 rounded-[3rem] border border-slate-100 shadow-sm">
+                        <h4 class="text-xl font-black text-blue-600 mb-8 uppercase flex items-center gap-3"><i data-lucide="store"></i> UMKM & Ekonomi Kreatif</h4>
+                        <div class="grid grid-cols-2 gap-4 text-[11px] font-bold text-slate-600 uppercase">
+                            <div class="flex justify-between border-b pb-1"><span>Warung Sembako</span> <span>15 Unit</span></div>
+                            <div class="flex justify-between border-b pb-1"><span>Bengkel Motor</span> <span>7 Unit</span></div>
+                            <div class="flex justify-between border-b pb-1"><span>Toko Kelontong</span> <span>5 Unit</span></div>
+                            <div class="flex justify-between border-b pb-1"><span>Usaha Jahit</span> <span>3 Unit</span></div>
+                            <div class="flex justify-between border-b pb-1"><span>Makanan Olahan</span> <span>3 Unit</span></div>
+                            <div class="flex justify-between border-b pb-1"><span>Ukiran & Kerajinan</span> <span>1 Unit</span></div>
+                        </div>
+                        <p class="mt-6 text-[9px] text-slate-400 italic uppercase">Pemasaran dilakukan secara Offline, Online, dan Media Sosial.</p>
+                    </div>
+                </div>
+
+                <!-- Infrastruktur Pendukung -->
+                <div class="bg-white p-12 rounded-[3rem] border border-slate-100 shadow-sm">
+                    <h4 class="text-2xl font-black text-slate-900 mb-10 uppercase flex items-center gap-4"><i data-lucide="settings" class="text-slate-400"></i> Sarana & Prasarana Pendukung Ekonomi</h4>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <div class="space-y-4">
+                            <p class="font-black text-blue-600 text-xs tracking-widest uppercase">Jalan Desa</p>
+                            <p class="text-[11px] text-slate-500 uppercase leading-relaxed font-bold">Kondisi bervariasi; sebagian masih lokal/tanah yang berlumpur saat musim hujan. Perlu perbaikan rutin.</p>
+                        </div>
+                        <div class="space-y-4">
+                            <p class="font-black text-amber-500 text-xs tracking-widest uppercase">Kelistrikan</p>
+                            <p class="text-[11px] text-slate-500 uppercase leading-relaxed font-bold">Terhubung sepenuhnya dengan PLN. Mayoritas rumah warga memiliki sambungan listrik mandiri.</p>
+                        </div>
+                        <div class="space-y-4">
+                            <p class="font-black text-emerald-600 text-xs tracking-widest uppercase">Telekomunikasi</p>
+                            <p class="text-[11px] text-slate-500 uppercase leading-relaxed font-bold">Sinyal seluler tersedia (3G/4G), kuat di pusat desa namun melemah di wilayah terpencil.</p>
+                        </div>
+                        <div class="space-y-4">
+                            <p class="font-black text-rose-500 text-xs tracking-widest uppercase">Transportasi</p>
+                            <p class="text-[11px] text-slate-500 uppercase leading-relaxed font-bold">Andalkan motor/mobil pribadi. Angkutan umum antar desa bersifat tidak rutin.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BAGIAN: POTENSI (LENGKAP) -->
+        <section id="page-potensi" class="page-content py-24">
+            <div class="max-w-7xl mx-auto px-6">
+                <header class="text-center mb-24">
+                    <span class="text-emerald-600 font-bold text-xs tracking-[0.4em] uppercase mb-4 block text-center leading-none">Eksplorasi Aset Desa</span>
+                    <h2 class="text-5xl font-extrabold text-slate-900 uppercase tracking-tight text-center leading-none">Potensi & Kelembagaan Desa</h2>
+                    <div class="w-24 h-2 bg-emerald-500 mx-auto mt-8 rounded-full"></div>
+                </header>
+
+                <!-- POTENSI SDA -->
+                <div class="mb-32">
+                    <div class="flex items-center gap-4 mb-12">
+                        <div class="bg-emerald-600 text-white p-4 rounded-[1.5rem] shadow-lg"><i data-lucide="leaf"></i></div>
+                        <div>
+                            <h3 class="text-3xl font-black text-slate-900 uppercase tracking-tight">Potensi Sumber Daya Alam (SDA)</h3>
+                            <p class="text-slate-500 text-sm font-bold uppercase tracking-widest">Kekayaan Alam Penopang Kehidupan</p>
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-xl transition-all">
+                            <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center mb-6"><i data-lucide="sprout"></i></div>
+                            <h4 class="text-xl font-black mb-4 uppercase">1. Pertanian</h4>
+                            <p class="text-sm text-slate-600 leading-relaxed text-justify mb-4">Penyedia bahan pangan utama (Jagung & Sayuran) untuk konsumsi rumah tangga dan pasar lokal. Masih menggunakan metode tradisional yang berpotensi ditingkatkan melalui teknologi pertanian.</p>
+                        </div>
+                        <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-xl transition-all">
+                            <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center mb-6"><i data-lucide="droplets"></i></div>
+                            <h4 class="text-xl font-black mb-4 uppercase">2. Perkebunan</h4>
+                            <p class="text-sm text-slate-600 leading-relaxed text-justify mb-4">Sektor unggulan dengan komoditas <strong>Kelapa Sawit</strong> dan <strong>Karet</strong>. Kelapa sawit menjadi kontributor ekonomi terbesar dengan hasil panen yang relatif stabil bagi warga desa.</p>
+                        </div>
+                        <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-xl transition-all">
+                            <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center mb-6"><i data-lucide="fish"></i></div>
+                            <h4 class="text-xl font-black mb-4 uppercase">3. Perikanan & Ternak</h4>
+                            <p class="text-sm text-slate-600 leading-relaxed text-justify mb-4">Budidaya ikan air tawar (Lele, Nila, Gurami) skala kecil. Sektor peternakan (Ayam, Kambing, Sapi) dilakukan secara tradisional sebagai sumber pendapatan tambahan.</p>
+                        </div>
+                        <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-xl transition-all">
+                            <div class="w-12 h-12 bg-slate-50 text-slate-600 rounded-2xl flex items-center justify-center mb-6"><i data-lucide="trees"></i></div>
+                            <h4 class="text-xl font-black mb-4 uppercase">4. Hutan</h4>
+                            <p class="text-sm text-slate-600 leading-relaxed text-justify mb-4">Berfungsi sebagai penyangga lingkungan dan penjaga keseimbangan ekosistem. Belum dimanfaatkan secara optimal untuk kegiatan ekonomi produktif.</p>
+                        </div>
+                        <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-xl transition-all lg:col-span-2">
+                            <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mb-6"><i data-lucide="mountain"></i></div>
+                            <h4 class="text-xl font-black mb-4 uppercase">5. Wisata Alam</h4>
+                            <p class="text-sm text-slate-600 leading-relaxed text-justify mb-4">Kondisi alam desa yang masih asri merupakan modal besar. Meskipun belum dikelola secara resmi, terdapat potensi besar untuk dikembangkan menjadi destinasi wisata desa di masa depan.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- POTENSI SDM -->
+                <div class="mb-32">
+                    <div class="flex items-center gap-4 mb-12">
+                        <div class="bg-blue-600 text-white p-4 rounded-[1.5rem] shadow-lg"><i data-lucide="users"></i></div>
+                        <div>
+                            <h3 class="text-3xl font-black text-slate-900 uppercase tracking-tight">Potensi Sumber Daya Manusia (SDM)</h3>
+                            <p class="text-slate-500 text-sm font-bold uppercase tracking-widest">Kekuatan Keterampilan & Tenaga Kerja</p>
+                        </div>
+                    </div>
+
+                    <div class="grid lg:grid-cols-2 gap-12">
+                        <div class="bg-white p-10 rounded-[3rem] border border-slate-100 shadow-sm">
+                            <h4 class="text-xl font-black text-blue-600 mb-8 flex items-center gap-3 uppercase"><i data-lucide="hammer"></i> Keterampilan Masyarakat</h4>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div class="p-4 bg-slate-50 rounded-2xl flex items-center gap-3"><div class="w-2 h-2 bg-blue-500 rounded-full"></div><span class="text-xs font-bold uppercase">Menjahit & Payet Baju</span></div>
+                                <div class="p-4 bg-slate-50 rounded-2xl flex items-center gap-3"><div class="w-2 h-2 bg-blue-500 rounded-full"></div><span class="text-xs font-bold uppercase">Memasak Makanan Rumahan</span></div>
+                                <div class="p-4 bg-slate-50 rounded-2xl flex items-center gap-3"><div class="w-2 h-2 bg-blue-500 rounded-full"></div><span class="text-xs font-bold uppercase">Pembuatan Buket Hadiah</span></div>
+                                <div class="p-4 bg-slate-50 rounded-2xl flex items-center gap-3"><div class="w-2 h-2 bg-blue-500 rounded-full"></div><span class="text-xs font-bold uppercase">Ukiran Kayu Tradisional</span></div>
+                            </div>
+                            <p class="text-[11px] text-slate-500 leading-relaxed mt-6 italic uppercase">Keterampilan ini merupakan modal ekonomi produktif tingkat rumah tangga yang potensial untuk dikembangkan.</p>
+                        </div>
+                        <div class="bg-emerald-900 text-white p-10 rounded-[3rem] shadow-xl relative overflow-hidden">
+                            <div class="relative z-10">
+                                <h4 class="text-xl font-black mb-6 uppercase flex items-center gap-3"><i data-lucide="briefcase"></i> Tenaga Kerja Produktif</h4>
+                                <div class="flex items-end gap-4 mb-6">
+                                    <span class="text-6xl font-black leading-none">2.349</span>
+                                    <span class="text-emerald-300 font-bold uppercase tracking-widest text-sm mb-1">Jiwa</span>
+                                </div>
+                                <p class="text-sm text-emerald-100 leading-relaxed text-justify uppercase font-bold">Jumlah penduduk usia 17–55 tahun yang menjadi tulang punggung kegiatan ekonomi desa, baik di sektor formal maupun informal.</p>
+                            </div>
+                            <i data-lucide="user-check" class="absolute -right-10 -bottom-10 w-64 h-64 opacity-10"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- EKONOMI LOKAL & UMKM -->
+                <div class="mb-32">
+                    <div class="flex items-center gap-4 mb-12">
+                        <div class="bg-amber-500 text-white p-4 rounded-[1.5rem] shadow-lg"><i data-lucide="store"></i></div>
+                        <div>
+                            <h3 class="text-3xl font-black text-slate-900 uppercase tracking-tight">Ekonomi Lokal & UMKM</h3>
+                            <p class="text-slate-500 text-sm font-bold uppercase tracking-widest">Produk Unggulan & Ekonomi Kreatif</p>
+                        </div>
+                    </div>
+
+                    <div class="grid lg:grid-cols-3 gap-8">
+                        <div class="bg-white p-8 rounded-[3rem] border border-slate-100 shadow-sm flex flex-col">
+                            <h4 class="text-xl font-black text-amber-600 mb-6 uppercase">Produk Unggulan</h4>
+                            <div class="space-y-4 flex-grow">
+                                <div class="p-5 bg-amber-50 rounded-2xl border border-amber-100">
+                                    <p class="font-black text-slate-800 text-sm uppercase">Keripik & Olahan</p>
+                                    <p class="text-[10px] text-slate-500 mt-1 uppercase">Keripik Pisang aneka rasa dan Emping Jengkol skala rumah tangga.</p>
+                                </div>
+                                <div class="p-5 bg-amber-50 rounded-2xl border border-amber-100">
+                                    <p class="font-black text-slate-800 text-sm uppercase">Bakery & Kue</p>
+                                    <p class="text-[10px] text-slate-500 mt-1 uppercase">Produksi berbagai jenis roti dan kue untuk kebutuhan harian warga.</p>
+                                </div>
+                                <div class="p-5 bg-amber-50 rounded-2xl border border-amber-100">
+                                    <p class="font-black text-slate-800 text-sm uppercase">Tempe & Tahu</p>
+                                    <p class="text-[10px] text-slate-500 mt-1 uppercase">Dipasarkan secara keliling dan sistem pesanan di lingkungan desa.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-8 rounded-[3rem] border border-slate-100 shadow-sm flex flex-col lg:col-span-2">
+                            <h4 class="text-xl font-black text-rose-600 mb-8 uppercase">Sektor Kerajinan Kreatif</h4>
+                            <div class="grid md:grid-cols-2 gap-8">
+                                <div class="relative pl-6 border-l-4 border-rose-500">
+                                    <h5 class="font-black text-slate-800 uppercase mb-2">Kerajinan Payet Baju (Mbak Ifa)</h5>
+                                    <p class="text-xs text-slate-500 leading-relaxed text-justify uppercase font-bold">Berjalan sejak 2020. Menerima pesanan kustom (3 hari - 1 bulan). Dipasarkan melalui jaringan lokal dan media sosial Facebook.</p>
+                                </div>
+                                <div class="relative pl-6 border-l-4 border-amber-500">
+                                    <h5 class="font-black text-slate-800 uppercase mb-2">Ukiran Kayu (Mbah Santo)</h5>
+                                    <p class="text-xs text-slate-500 leading-relaxed text-justify uppercase font-bold">Berdiri sejak 1987. Menghasilkan miniatur mobil & motor secara manual. Saat ini melayani sistem <em>by request</em> untuk menjaga kualitas.</p>
+                                </div>
+                            </div>
+                            <div class="mt-10 p-6 bg-slate-50 rounded-[2rem] border border-slate-100">
+                                <h5 class="text-sm font-black text-slate-800 uppercase mb-2 flex items-center gap-2"><i data-lucide="info" class="w-4 h-4 text-blue-500"></i> Catatan Kuliner Khas</h5>
+                                <p class="text-xs text-slate-500 leading-relaxed uppercase font-bold">Saat ini belum terdapat identitas kuliner khas daerah yang spesifik. Sektor ini menjadi peluang investasi dan inovasi pengemasan di masa depan.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- WISATA & BUDAYA -->
+                <div class="mb-32">
+                    <div class="flex items-center gap-4 mb-12">
+                        <div class="bg-emerald-600 text-white p-4 rounded-[1.5rem] shadow-lg"><i data-lucide="palmtree"></i></div>
+                        <div>
+                            <h3 class="text-3xl font-black text-slate-900 uppercase tracking-tight">Wisata & Keberagaman Budaya</h3>
+                            <p class="text-slate-500 text-sm font-bold uppercase tracking-widest">Harmoni Tradisi dalam Keasrian Alam</p>
+                        </div>
+                    </div>
+
+                    <div class="grid lg:grid-cols-2 gap-12 mb-12">
+                        <div class="bg-white p-10 rounded-[3rem] border border-slate-100 shadow-sm">
+                            <h4 class="text-xl font-black text-emerald-600 mb-6 uppercase flex items-center gap-3"><i data-lucide="map-pin"></i> Objek Wisata</h4>
+                            <p class="text-sm text-slate-600 leading-relaxed text-justify mb-6 uppercase font-bold">Desa belum memiliki objek wisata resmi yang dikelola. Fokus saat ini pada pemetaan potensi alam perbukitan dan budaya lokal untuk perencanaan wisata berbasis masyarakat di masa depan.</p>
+                            <div class="p-6 bg-emerald-50 rounded-2xl border border-emerald-100">
+                                <h5 class="text-xs font-black text-emerald-800 uppercase mb-2">Peluang Masa Depan</h5>
+                                <p class="text-[10px] text-slate-500 leading-relaxed uppercase">Bentang alam asri sangat potensial untuk ekowisata dan wisata edukasi pertanian.</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-10 rounded-[3rem] border border-slate-100 shadow-sm">
+                            <h4 class="text-xl font-black text-blue-600 mb-6 uppercase flex items-center gap-3"><i data-lucide="users-2"></i> Tradisi & Kerukunan</h4>
+                            <p class="text-sm text-slate-600 leading-relaxed text-justify mb-4 uppercase font-bold">Perpaduan budaya Jawa (Midodareni), Batak (Mangulosi), dan Sunda (Mapag Penganten) menciptakan toleransi tinggi di Bukit Bungkul.</p>
+                            <ul class="space-y-3 text-[10px] font-black text-slate-500 uppercase">
+                                <li class="flex items-center gap-2"><i data-lucide="calendar" class="w-3 h-3 text-blue-500"></i> Peringatan Malam 1 Suro (Doa Bersama & Syukur)</li>
+                                <li class="flex items-center gap-2"><i data-lucide="heart" class="w-3 h-3 text-rose-500"></i> Tradisi Pernikahan Adat yang Terjaga</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="grid lg:grid-cols-2 gap-12">
+                        <div class="bg-white p-10 rounded-[3rem] border border-slate-100 shadow-sm">
+                            <h4 class="text-xl font-black text-amber-600 mb-6 uppercase flex items-center gap-3"><i data-lucide="music"></i> Kesenian Lokal</h4>
+                            <div class="grid grid-cols-2 gap-4 uppercase font-bold">
+                                <div class="p-4 bg-slate-50 rounded-2xl">
+                                    <p class="text-xs text-amber-700">Kuda Lumping</p>
+                                    <p class="text-[9px] text-slate-400 mt-1">Seni Pertunjukan Tradisional Jawa</p>
+                                </div>
+                                <div class="p-4 bg-slate-50 rounded-2xl">
+                                    <p class="text-xs text-amber-700">Anyaman Tikar</p>
+                                    <p class="text-[9px] text-slate-400 mt-1">Kerajinan Daun Pandan Turun Temurun</p>
+                                </div>
+                                <div class="p-4 bg-slate-50 rounded-2xl">
+                                    <p class="text-xs text-amber-700">Tari Daerah</p>
+                                    <p class="text-[9px] text-slate-400 mt-1">Khas Merangin & Jambi (Sumatra)</p>
+                                </div>
+                                <div class="p-4 bg-slate-50 rounded-2xl">
+                                    <p class="text-xs text-amber-700">Musik Tradisional</p>
+                                    <p class="text-[9px] text-slate-400 mt-1">Pengiring Acara Adat & Nasional</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white p-10 rounded-[3rem] border border-slate-100 shadow-sm">
+                            <h4 class="text-xl font-black text-rose-600 mb-6 uppercase flex items-center gap-3"><i data-lucide="utensils-crossed"></i> Variasi Kuliner Lokal</h4>
+                            <p class="text-xs text-slate-600 leading-relaxed text-justify mb-6 uppercase font-bold">Dominasi cita rasa Jawa yang beradaptasi dengan bahan pangan Sumatra (Ikan Sungai, Tempoyak, Santan).</p>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="p-4 border-l-4 border-rose-500 bg-rose-50">
+                                    <h5 class="text-[10px] font-black text-rose-800 uppercase">Jawa Tengah/Yogya</h5>
+                                    <p class="text-[9px] text-slate-500 uppercase">Manis & Bersantan (Nasi Liwet, Lodeh)</p>
+                                </div>
+                                <div class="p-4 border-l-4 border-amber-500 bg-amber-50">
+                                    <h5 class="text-[10px] font-black text-amber-800 uppercase">Jawa Timur</h5>
+                                    <p class="text-[9px] text-slate-500 uppercase">Gurih & Pedas (Soto, Rawon)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DIGITAL & TEKNOLOGI INFORMASI -->
+                <div class="mb-32">
+                    <div class="flex items-center gap-4 mb-12">
+                        <div class="bg-blue-900 text-white p-4 rounded-[1.5rem] shadow-lg"><i data-lucide="wifi"></i></div>
+                        <div>
+                            <h3 class="text-3xl font-black text-slate-900 uppercase tracking-tight">Digital & Teknologi Informasi</h3>
+                            <p class="text-slate-500 text-sm font-bold uppercase tracking-widest">Konektivitas & Masa Transisi Digital</p>
+                        </div>
+                    </div>
+
+                    <div class="grid lg:grid-cols-3 gap-8 mb-12">
+                        <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm lg:col-span-2">
+                            <h4 class="text-xl font-black text-blue-600 mb-8 uppercase flex items-center gap-3"><i data-lucide="signal"></i> Akses & Jaringan Internet</h4>
+                            <div class="grid md:grid-cols-2 gap-8">
+                                <div class="space-y-4">
+                                    <p class="text-xs font-black text-slate-400 uppercase tracking-widest leading-none">Provider Tersedia</p>
+                                    <div class="flex gap-2">
+                                        <span class="px-3 py-1 bg-rose-50 text-rose-600 text-[10px] font-black rounded-lg border border-rose-100">Telkomsel</span>
+                                        <span class="px-3 py-1 bg-blue-50 text-blue-600 text-[10px] font-black rounded-lg border border-blue-100">XL</span>
+                                        <span class="px-3 py-1 bg-amber-50 text-amber-600 text-[10px] font-black rounded-lg border border-amber-100">IM3</span>
+                                    </div>
+                                    <p class="text-xs text-slate-600 leading-relaxed uppercase font-bold">Pusat Desa (Sidomulyo, Rejomulyo, Sidorejo, Sukamaju) memiliki kualitas sinyal yang stabil.</p>
+                                </div>
+                                <div class="p-6 bg-rose-50 rounded-2xl border border-rose-100">
+                                    <h5 class="text-xs font-black text-rose-800 uppercase flex items-center gap-2 mb-2"><i data-lucide="alert-octagon" class="w-4 h-4"></i> Area Kendala</h5>
+                                    <p class="text-[10px] font-bold text-rose-700 leading-relaxed uppercase">DUSUN MADUSARI: Sinyal belum stabil (hilang timbul) karena letak geografis di ujung desa.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm flex flex-col justify-center">
+                            <h4 class="text-xl font-black text-emerald-600 mb-4 uppercase flex items-center gap-3"><i data-lucide="smartphone"></i> Literasi Digital</h4>
+                            <p class="text-xs text-slate-500 leading-relaxed text-justify uppercase font-bold">Masyarakat lintas usia telah terbiasa menggunakan WhatsApp untuk koordinasi desa. Media sosial (FB, TikTok, Instagram) aktif digunakan untuk hiburan dan pendidikan.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-900 text-white p-12 rounded-[3.5rem] shadow-xl relative overflow-hidden">
+                        <div class="relative z-10">
+                            <h4 class="text-2xl font-black mb-8 uppercase tracking-tight flex items-center gap-4"><i data-lucide="trending-up" class="text-blue-400"></i> Peluang Ekonomi Digital (Masa Transisi)</h4>
+                            <div class="grid md:grid-cols-2 gap-12">
+                                <div class="space-y-6">
+                                    <div class="flex gap-4">
+                                        <div class="w-10 h-10 shrink-0 bg-blue-500/20 rounded-xl flex items-center justify-center border border-blue-400/30 text-blue-400"><i data-lucide="shopping-cart" class="w-5 h-5"></i></div>
+                                        <div>
+                                            <h5 class="text-sm font-black uppercase mb-1">Model Penjualan Hybrid</h5>
+                                            <p class="text-[11px] text-slate-400 leading-relaxed uppercase">Campuran pesanan online (FB/WA) untuk Bakery & Keripik, serta cara tradisional (keliling) untuk Tempe & Tahu.</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex gap-4">
+                                        <div class="w-10 h-10 shrink-0 bg-emerald-500/20 rounded-xl flex items-center justify-center border border-emerald-400/30 text-emerald-400"><i data-lucide="zap" class="w-5 h-5"></i></div>
+                                        <div>
+                                            <h5 class="text-sm font-black uppercase mb-1">Efisiensi Produksi</h5>
+                                            <p class="text-[11px] text-slate-400 leading-relaxed uppercase">Sistem <em>Pre-Order</em> digital membantu mengurangi limbah produksi dan menjangkau pembeli luar desa.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-8 bg-white/5 rounded-3xl border border-white/10 backdrop-blur-sm">
+                                    <p class="text-sm italic text-slate-300 leading-relaxed text-justify uppercase font-bold">"Desa sedang berada dalam masa transisi. Sebagian besar masih nyaman dengan cara tradisional karena faktor usia, namun potensi ekspansi pasar lewat pendampingan digital sangat terbuka lebar."</p>
+                                </div>
+                            </div>
+                        </div>
+                        <i data-lucide="cpu" class="absolute -right-20 -bottom-20 w-96 h-96 opacity-5 text-white"></i>
+                    </div>
+                </div>
+
+                <!-- KELEMBAGAAN & ASSET (REKAP) -->
+                <div class="grid lg:grid-cols-2 gap-12 mb-24">
+                    <div class="bg-white p-10 rounded-[3rem] border border-slate-100 shadow-sm">
+                        <h3 class="text-2xl font-black text-slate-900 mb-8 uppercase flex items-center gap-3"><i data-lucide="building-2" class="text-emerald-600"></i> Lembaga Ekonomi Aktif</h3>
+                        <div class="space-y-6 uppercase font-bold">
+                            <div class="p-6 bg-emerald-50 rounded-3xl border border-emerald-100">
+                                <p class="text-[10px] text-emerald-600 tracking-widest mb-1">BUMDES</p>
+                                <p class="text-xl text-slate-800">BUMDES KETAPANG</p>
+                                <p class="text-[10px] text-slate-500 mt-2">Wadah penggerak ekonomi desa untuk kemandirian dan pengelolaan aset desa.</p>
+                            </div>
+                            <div class="p-6 bg-blue-50 rounded-3xl border border-blue-100">
+                                <p class="text-[10px] text-blue-600 tracking-widest mb-1">KOPERASI</p>
+                                <p class="text-xl text-slate-800">KOPERASI MERAH PUTIH</p>
+                                <p class="text-[10px] text-slate-500 mt-2">Menyediakan layanan simpan pinjam dan pemberdayaan permodalan bagi anggota.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-10 rounded-[3rem] border border-slate-100 shadow-sm">
+                        <h3 class="text-2xl font-black text-slate-900 mb-8 uppercase flex items-center gap-3"><i data-lucide="users-2" class="text-blue-600"></i> Pemberdayaan Masyarakat</h3>
+                        <div class="grid gap-4 uppercase font-bold text-[11px]">
+                            <div class="flex items-center gap-4 p-4 bg-slate-50 rounded-2xl">
+                                <div class="bg-white p-2 rounded-xl shadow-sm text-emerald-600"><i data-lucide="check-square" class="w-4 h-4"></i></div>
+                                <span>Karang Taruna Muda Karya (Sangat Aktif)</span>
+                            </div>
+                            <div class="flex items-center gap-4 p-4 bg-slate-50 rounded-2xl">
+                                <div class="bg-white p-2 rounded-xl shadow-sm text-emerald-600"><i data-lucide="check-square" class="w-4 h-4"></i></div>
+                                <span>Kelompok Wanita Tani (KWT) & Suka Tani</span>
+                            </div>
+                            <div class="flex items-center gap-4 p-4 bg-slate-50 rounded-2xl">
+                                <div class="bg-white p-2 rounded-xl shadow-sm text-emerald-600"><i data-lucide="check-square" class="w-4 h-4"></i></div>
+                                <span>Gapoktan (Gabungan Kelompok Tani Desa)</span>
+                            </div>
+                            <div class="flex items-center gap-4 p-4 bg-slate-50 rounded-2xl">
+                                <div class="bg-white p-2 rounded-xl shadow-sm text-emerald-600"><i data-lucide="check-square" class="w-4 h-4"></i></div>
+                                <span>Majelis Taklim & Pengajian Rutin</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-950 text-slate-500 py-12 mt-auto">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <div class="flex items-center justify-center gap-3 mb-6">
+                <div class="bg-emerald-600 p-2 rounded-lg text-white shadow-lg shadow-emerald-900/50 leading-none text-white uppercase"><i data-lucide="map" class="w-5 h-5 leading-none uppercase text-white"></i></div>
+                <span class="text-white font-extrabold text-xl uppercase tracking-widest leading-none text-white">Bukit Bungkul (A2)</span>
+            </div>
+            <p class="text-[10px] font-bold uppercase tracking-[0.4em] opacity-30 leading-relaxed italic text-white uppercase">
+                Mahasiswa KKN Desa Bukit Bungkul 2025
+            </p>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script>
+        // Inisialisasi Ikon Lucide
+        lucide.createIcons();
+
+        // Logika Navigasi Utama
+        function navigateTo(pageId) {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            document.querySelectorAll('.page-content').forEach(page => {
+                page.classList.remove('active');
+            });
+
+            const targetPage = document.getElementById('page-' + pageId);
+            if(targetPage) {
+                targetPage.classList.add('active');
+            }
+
+            // Perbarui Gaya Tombol Navigasi
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('text-emerald-600', 'font-bold', 'bg-emerald-50');
+                btn.classList.add('text-slate-600', 'font-semibold');
+            });
+
+            const activeBtns = document.querySelectorAll(`[onclick="navigateTo('${pageId}')"]`);
+            activeBtns.forEach(btn => {
+                if (btn.classList.contains('nav-btn')) {
+                    btn.classList.add('text-emerald-600', 'font-bold', 'bg-emerald-50');
+                    btn.classList.remove('text-slate-600', 'font-semibold');
+                }
+            });
+
+            // Tutup menu mobile jika terbuka
+            const menu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            if(!menu.classList.contains('hidden')) {
+                menu.classList.add('hidden');
+                menuIcon.setAttribute('data-lucide', 'menu');
+                lucide.createIcons();
+            }
+            
+            // Re-run animations if navigating to history
+            if (pageId === 'sejarah') {
+                setTimeout(initCountAnimations, 500);
+            }
+        }
+
+        // Toggle Menu Mobile
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            const isHidden = menu.classList.contains('hidden');
+            
+            if (isHidden) {
+                menu.classList.remove('hidden');
+                menuIcon.setAttribute('data-lucide', 'x');
+            } else {
+                menu.classList.add('hidden');
+                menuIcon.setAttribute('data-lucide', 'menu');
+            }
+            lucide.createIcons();
+        }
+
+        // Logika Toggle Sambutan (Read More)
+        function toggleGreeting() {
+            const wrapper = document.getElementById('greeting-wrapper');
+            const overlay = document.getElementById('greeting-overlay');
+            const btn = document.getElementById('read-more-btn');
+            const span = btn.querySelector('span');
+            const icon = btn.querySelector('i');
+            
+            const isExpanded = wrapper.style.maxHeight === 'none' || wrapper.classList.contains('max-h-none');
+
+            if (isExpanded) {
+                wrapper.classList.remove('max-h-none');
+                wrapper.style.maxHeight = '380px';
+                overlay.style.opacity = '1';
+                overlay.style.display = 'block';
+                span.innerText = 'Lihat Selengkapnya';
+                btn.querySelector('i').setAttribute('data-lucide', 'chevron-down');
+            } else {
+                wrapper.classList.add('max-h-none');
+                wrapper.style.maxHeight = wrapper.scrollHeight + 'px';
+                overlay.style.opacity = '0';
+                setTimeout(() => overlay.style.display = 'none', 500);
+                span.innerText = 'Tampilkan Lebih Sedikit';
+                btn.querySelector('i').setAttribute('data-lucide', 'chevron-up');
+            }
+            lucide.createIcons();
+        }
+
+        // Animasi Count-Up
+        function initCountAnimations() {
+            const counters = document.querySelectorAll('.count-up');
+            const duration = 2000; // ms
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const target = entry.target;
+                        const endValue = parseInt(target.getAttribute('data-target'));
+                        const suffix = target.getAttribute('data-suffix') || '';
+                        let startValue = 0;
+                        let startTime = null;
+
+                        function animation(currentTime) {
+                            if (!startTime) startTime = currentTime;
+                            const progress = currentTime - startTime;
+                            const currentNumber = Math.min(Math.floor((progress / duration) * endValue), endValue);
+                            
+                            target.innerText = currentNumber + suffix;
+
+                            if (progress < duration) {
+                                requestAnimationFrame(animation);
+                            } else {
+                                target.innerText = endValue + suffix;
+                            }
+                        }
+                        
+                        requestAnimationFrame(animation);
+                        observer.unobserve(target); // Only animate once
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            counters.forEach(counter => observer.observe(counter));
+        }
+
+        // Implementasi Fitur Drag-to-Scroll untuk Bagan
+        function initDragScroll(elementId) {
+            const slider = document.getElementById(elementId);
+            if (!slider) return;
+
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+
+            slider.addEventListener('mousedown', (e) => {
+                isDown = true;
+                startX = e.pageX - slider.offsetLeft;
+                scrollLeft = slider.scrollLeft;
+            });
+
+            slider.addEventListener('mouseleave', () => {
+                isDown = false;
+            });
+
+            slider.addEventListener('mouseup', () => {
+                isDown = false;
+            });
+
+            slider.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - slider.offsetLeft;
+                const walk = (x - startX) * 2;
+                slider.scrollLeft = scrollLeft - walk;
+            });
+            
+            // Dukungan Sentuh
+            slider.addEventListener('touchstart', (e) => {
+                isDown = true;
+                startX = e.touches[0].pageX - slider.offsetLeft;
+                scrollLeft = slider.scrollLeft;
+            });
+            
+            slider.addEventListener('touchend', () => {
+                isDown = false;
+            });
+            
+            slider.addEventListener('touchmove', (e) => {
+                if (!isDown) return;
+                const x = e.touches[0].pageX - slider.offsetLeft;
+                const walk = (x - startX) * 2;
+                slider.scrollLeft = scrollLeft - walk;
+            });
+        }
+
+        window.addEventListener('load', () => {
+            initDragScroll('org-chart-scroll-1');
+            initDragScroll('org-chart-scroll-2');
+            initDragScroll('org-chart-scroll-3');
+            initDragScroll('org-chart-scroll-4');
+            initCountAnimations();
+        });
+    </script>
+</body>
+</html>
